@@ -6,6 +6,13 @@ The format is (read: strives to be) based on [Keep a Changelog](https://keepacha
 
 ---
 
+## [0.1.1] – 2026-01-22
+### Added:
+- Screenshot.
+- PyPI stable.
+
+---
+
 ## [0.1.0] – 2026-01-22
 ### Added:
 - Inital commit.
