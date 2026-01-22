@@ -6,6 +6,12 @@ The format is (read: strives to be) based on [Keep a Changelog](https://keepacha
 
 ---
 
+## [0.1.4] – 2026-01-22
+### Fixed:
+- Troubleshoot screenshot update.
+
+---
+
 ## [0.1.3] – 2026-01-22
 ### Added:
 - In readme, mention projects that use typer-helptree
