@@ -6,6 +6,12 @@ The format is (read: strives to be) based on [Keep a Changelog](https://keepacha
 
 ---
 
+## [0.1.7] – 2026-01-22
+### Fixed:
+- Remove the erroneous AGPL reference in the pyproject.toml, which had been copied from pdflinkcheck.
+
+---
+
 ## [0.1.5] – 2026-01-22
 ### Fixed:
 - Expose `add_typer_helptree()` in __init__.py
