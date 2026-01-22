@@ -34,3 +34,9 @@ add_typer_helptree(
     console = console)
 
 ```
+
+And then, from the command line:
+
+```bash
+your-fancy-app helptree
+```
