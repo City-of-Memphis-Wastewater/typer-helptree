@@ -12,3 +12,5 @@ The format is (read: strives to be) based on [Keep a Changelog](https://keepacha
 - Copied files and portions from pdflinkcheck code, at v1.3.35.
 - Rename project to typer_helptree.
 - Start github repository at https://github.com/City-of-Memphis-Wastewater/typer-helptree
+- For CI actions, copy and adjust from Dworshak.
+- Update to Pyhabitat v1.1.26, with new is_in_git_repo() function.
