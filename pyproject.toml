@@ -11,8 +11,8 @@ dependencies = [
     "typer>=0.20.0",
 ]
 
-license = "MIT AND AGPL-3.0-or-later"
-license-files = ["LICENSE", "LICENSE-MIT", "LICENSE-AGPL3"]
+license = "MIT"
+license-files = ["LICENSE"]
 
 classifiers=[
     "Programming Language :: Python :: 3",
