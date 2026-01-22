@@ -1,7 +1,9 @@
 # typer-helptree
 
 The `helptree` command can be added to your Typer CLI.
-Perfect use case: Release screenshot.
+
+## User story
+- **Dev**: *"I want to add a screenshot to my GitHub release, and to my README, which my entire CLI structure."*
 
 ```bash
 typer-helptree helptree
