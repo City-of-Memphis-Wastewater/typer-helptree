@@ -1,6 +1,6 @@
 [project]
 name = "typer-helptree"
-version = "0.1.1"
+version = "0.1.2"
 description = "Display your entire CLI structure, beautifully. Screenshot ready."
 readme = "README.md"
 

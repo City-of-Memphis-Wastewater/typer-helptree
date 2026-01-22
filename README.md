@@ -4,7 +4,7 @@ The `helptree` command can be added to your Typer CLI.
 Perfect use case: Release screenshot.
 
 ```bash
-typer-helptree helptree`
+typer-helptree helptree
 ```
 
 ![Screenshot of the typer-helptree herlptree](https://raw.githubusercontent.com/City-of-Memphis-Wastewater/typer-helptree/main/assets/typer_helptree_v0.1.1.jpg)
@@ -14,13 +14,15 @@ typer-helptree helptree`
 Use helptree in your Typer CLI: 
 
 ```python
+# src/your_fancy_app/cli.py
+
 # --- Imports ---
 import typer
 from rich.console import Console
 from typer_helptree.helptree import add_typer_helptree # <--- The Secret Sauce
 
 # --- Typical App Instantiation ---
-APP_NAME "your-fancy-typer-cli"
+APP_NAME "your-fancy-app"
 console = Console()
 app = typer.Typer(
     name=APP_NAME
