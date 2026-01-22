@@ -21,7 +21,8 @@ Use helptree in your Typer CLI:
 # --- Imports ---
 import typer
 from rich.console import Console
-from typer_helptree.helptree import add_typer_helptree # <--- The Secret Sauce
+# Import the add_typer_helptree command.
+from typer_helptree.helptree import add_typer_helptree
 
 # --- Typical App Instantiation ---
 APP_NAME "your-fancy-app"
