@@ -9,6 +9,7 @@ The format is (read: strives to be) based on [Keep a Changelog](https://keepacha
 ## [0.1.2] – 2026-01-22
 ### Added:
 - Example python cli.py usage.
+- User story in README.md.
 
 ---
 
