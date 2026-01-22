@@ -6,7 +6,7 @@ readme = "README.md"
 
 requires-python = ">=3.9"
 dependencies = [
-    "pyhabitat>=1.1.18",
+    "pyhabitat>=1.1.26",
     "rich>=14.2.0",
     "typer>=0.20.0",
 ]

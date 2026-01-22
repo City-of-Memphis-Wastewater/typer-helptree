@@ -421,11 +421,11 @@ wheels = [
 
 [[package]]
 name = "pyhabitat"
-version = "1.1.25"
+version = "1.1.26"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/9e/42/54204f41f6a67b44485f606d227dc47d6cfa54b94c881a0fa8e3c1ef7e6e/pyhabitat-1.1.25.tar.gz", hash = "sha256:1b664c3d2dab513f99e84252769484f3ba44a789d2b55711310d8ce3c07c9217", size = 28136, upload-time = "2026-01-19T23:14:53.054Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/ba/78/ed0de713b39e9d43d9c4c3f5242f6aeeafbaa171ddc8f5fc91ca3e01941f/pyhabitat-1.1.26.tar.gz", hash = "sha256:f79ffb61cbd409d746f9b6c1b48c3105eacf105d33955609e662552a0410b0b3", size = 28378, upload-time = "2026-01-22T08:50:26.092Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/fa/f0/06db99b0731384952b9b43da61a9a9cd8c4df84dcded81679384d8bf8b27/pyhabitat-1.1.25-py3-none-any.whl", hash = "sha256:d6f4154054229687279333f60193c82cce2aaceb1dc78e9369906615b6d64623", size = 26376, upload-time = "2026-01-19T23:14:51.378Z" },
+    { url = "https://files.pythonhosted.org/packages/4c/bb/2767c94bb741fc7555ec0796ad789a5469e461517107a797a659674ea3e3/pyhabitat-1.1.26-py3-none-any.whl", hash = "sha256:de12e4ba5c11c047558692b1866ea56f819f31a570eba1128e28cf318bb0b7a3", size = 26607, upload-time = "2026-01-22T08:50:24.782Z" },
 ]
 
 [[package]]
@@ -692,7 +692,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "pyhabitat", specifier = ">=1.1.18" },
+    { name = "pyhabitat", specifier = ">=1.1.26" },
     { name = "rich", specifier = ">=14.2.0" },
     { name = "typer", specifier = ">=0.20.0" },
 ]

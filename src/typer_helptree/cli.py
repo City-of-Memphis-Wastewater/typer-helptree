@@ -31,7 +31,7 @@ app = typer.Typer(
     help=f"Visualize your entire CLI, beautifully. (v{get_version_from_pyproject()})",
     add_completion=False,
     invoke_without_command = True, 
-    no_args_is_help = False,
+    no_args_is_help = True,
     context_settings={"ignore_unknown_options": True,
                       "allow_extra_args": True,
                       "help_option_names": ["-h", "--help"]},
@@ -67,14 +67,14 @@ def main(ctx: typer.Context,
     )
     ):
     """
-    If no subcommand is provided, launch the GUI.
+    Main.
     """
     if version:
         typer.echo(get_version_from_pyproject())
         raise typer.Exit(code=0)
         
     if ctx.invoked_subcommand is None:
-        gui_command()
+        pass
         raise typer.Exit(code=0)
 
 
