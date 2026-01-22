@@ -1,0 +1,29 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+.python-version
+
+# Virtual environments
+.venv/
+
+.ipynb_checkpoints/
+
+# Samples, examples, sandbox
+src/sample/
+src/example/
+src/sandbox/
+src/defunct/
+
+# Ignore the copies created by datacopy.py
+src/typer_helptree/data/pyproject.toml
+src/typer_helptree/data/LICENSE
+src/typer_helptree/data/README.md
+
+# Other
+uv.lock
+/msix-build/
+*:Zone.Identifier
