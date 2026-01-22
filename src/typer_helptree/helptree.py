@@ -1,6 +1,6 @@
 #!/usr/bin/env python3 
 # SPDX-License-Identifier: MIT
-# pdflinkcheck/dev.py
+# src/typer_helptree/dev.py
 
 """
 Experiemental developer-facing function(s).
@@ -9,14 +9,14 @@ help_tree_command() used click and typer internals which might change version to
 
 This portion of the codebase is MIT licensed. It does not rely on any AGPL-licensed code.
 
-DEV_TYPER_HELP_TREE=1 pdflinkcheck help-tree
+DEV_TYPER_HELP_TREE=1 typer-helptree helptree
 
 ```
 import os
 os.environ["DEV_TYPER_HELP_TREE"] = "true"
 
-import pdflinkcheck
-subprocess.run("pdflinkcheck", "help-tree")
+import typer_helptree
+subprocess.run("typer-helptree", "helptree")
 ```
 """
 from __future__ import annotations
@@ -25,7 +25,7 @@ from rich.tree import Tree
 from rich.panel import Panel
 import click
 
-from pdflinkcheck.version_info import get_version_from_pyproject # change to import from pyhabitat
+from typer_helptree.version_info import get_version_from_pyproject # change to import from pyhabitat
 
 def add_typer_help_tree(app,
                   console):
