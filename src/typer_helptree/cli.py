@@ -16,7 +16,8 @@ from enum import Enum
 
 from typer_helptree.version_info import get_version_from_pyproject
 
-APP_NAME = "typer-tree-demo"
+APP_NAME = "typer-helptree"
+APP_DIR = "typer_helptree"
 
 console = Console() # to be above the tkinter check, in case of console.print
 
@@ -107,6 +108,59 @@ def tools_browse_exports():
         console.print(f"[bold red]Error:[/bold red] {e}")
         raise typer.Exit(code=1)
 
+
+@app.command(name="docs", help="Show the docs for this software.")
+def docs_command(
+    license: Optional[bool] = typer.Option(
+        None, "--license", "-l", help="Show the LICENSE text."
+    ),
+    readme: Optional[bool] = typer.Option(
+        None, "--readme", "-r", help="Show the README.md content."
+    ),
+):
+    """
+    Show docs for the package.
+    """
+    if not license and not readme:
+        # If no flags are provided, show the help message for the docs subcommand.
+        # Use ctx.invoke(ctx.command.get_help, ctx) if you want to print help immediately.
+        # Otherwise, the default behavior (showing help) works fine, but we'll add a message.
+        console.print("[yellow]Please use either the --license or --readme flag.[/yellow]")
+        return # Typer will automatically show the help message.
+
+    if pyhabitat.is_in_git_repo():
+        """This is too aggressive. But we don't expect it often. Probably worth it."""
+        from typer_helptree.datacopy import ensure_data_files_for_build
+        ensure_data_files_for_build()
+
+    # --- Handle --license flag ---
+    if license:
+        try:
+            license_path = files(f"{APP_DIR}.data") / "LICENSE"
+            license_text = license_path.read_text(encoding="utf-8")
+            console.print(f"\n[bold green]=== GNU AFFERO GENERAL PUBLIC LICENSE V3+ ===[/bold green]")
+            console.print(license_text, highlight=False)
+
+        except FileNotFoundError:
+            console.print("[bold red]Error:[/bold red] The embedded license file could not be found.")
+            raise typer.Exit(code=1)
+
+    # --- Handle --readme flag ---
+    if readme:
+        try:
+            readme_path = files(f"{APP_DIR}.data") / "README.md"
+            readme_text = readme_path.read_text(encoding="utf-8")
+
+            # Using rich's Panel can frame the readme text nicely
+            console.print(f"\n[bold green]=== README ===[/bold green]")
+            console.print(readme_text, highlight=False)
+
+        except FileNotFoundError:
+            console.print("[bold red]Error:[/bold red] The embedded README.md file could not be found.")
+            raise typer.Exit(code=1)
+
+    # Exit successfully if any flag was processed
+    raise typer.Exit(code=0)
 
 if __name__ == "__main__":
     app()
