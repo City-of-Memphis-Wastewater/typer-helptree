@@ -1,6 +1,6 @@
 #!/usr/bin/env python3 
 # SPDX-License-Identifier: MIT
-# src/typer_tree/cli.py
+# src/typer_helptree/cli.py
 from __future__ import annotations
 import typer
 from typing import Literal, List
@@ -14,7 +14,7 @@ import os
 from importlib.resources import files
 from enum import Enum
 
-from typer_tree.version_info import get_version_from_pyproject
+from typer_helptree.version_info import get_version_from_pyproject
 
 APP_NAME = "typer-tree-demo"
 
@@ -79,7 +79,7 @@ def main(ctx: typer.Context,
 
 # help-tree() command: fragile, experimental, defaults to not being included.
 if os.environ.get('DEV_TYPER_HELP_TREE',0) in ('true','1'):
-    from typer_tree.helptree import add_typer_help_tree
+    from typer_helptree.helptree import add_typer_help_tree
     add_typer_help_tree(
         app = app,
         console = console)
@@ -89,14 +89,14 @@ tools_app = typer.Typer(help="Additional utility features and maintenance tools.
 app.add_typer(tools_app, name="tools")
 
 @tools_app.command(name="nested-tool")
-def tools_nested-tool():
+def tools_nested_tool():
     """Demo"""
     print("This is a demo of a nested command.")
 
 @tools_app.command(name="browse-exports")
 def tools_browse_exports():
     """Open the system file explorer at the report output directory."""
-    from typer_tree.helpers import get_export_path
+    from typer_helptree.helpers import get_export_path
     
     target_dir = get_export_path()
     console.print(f"Opening: [bold cyan]{target_dir}[/bold cyan]")
