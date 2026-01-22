@@ -3,7 +3,7 @@
 The `helptree` command can be added to your Typer CLI.
 
 ## User story
-- **Dev**: *"I want to add a screenshot of my CLI structure, to add to my GitHub release and to my README."*
+- **Dev**: *"I want to a screenshot of my CLI structure, to add to my GitHub release and to my README."*
 
 ```bash
 typer-helptree helptree
