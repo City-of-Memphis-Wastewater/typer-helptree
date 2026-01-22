@@ -41,6 +41,9 @@ And then, from the command line:
 ```bash
 your-fancy-app helptree
 ```
+---
 
-## Projects that use *typer-helptree*
+### Projects that use **typer-helptree*
+*
 - https://pypi.org/project/pdflinkcheck/
+- https://pypi.org/project/dworshak/

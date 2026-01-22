@@ -1,6 +1,6 @@
 [project]
 name = "typer-helptree"
-version = "0.1.2"
+version = "0.1.3"
 description = "Display your entire CLI structure, beautifully. Screenshot ready."
 readme = "README.md"
 
@@ -27,8 +27,8 @@ classifiers=[
     "Intended Audience :: Developers", # library and documentation
     "Environment :: Console",
     "Typing :: Typed",
-    "Development Status :: 4 - Beta",
-    #"Development Status :: 5 - Production/Stable",
+    #"Development Status :: 4 - Beta",
+    "Development Status :: 5 - Production/Stable",
 ]
 
 authors = [

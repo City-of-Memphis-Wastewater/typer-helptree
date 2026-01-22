@@ -6,6 +6,13 @@ The format is (read: strives to be) based on [Keep a Changelog](https://keepacha
 
 ---
 
+## [0.1.3] – 2026-01-22
+### Added:
+- In readme, mention projects that use typer-helptree
+- Change OSI Development Status to "5 - Production/Stable"
+
+---
+
 ## [0.1.2] – 2026-01-22
 ### Added:
 - Example python cli.py usage.
