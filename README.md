@@ -8,3 +8,27 @@ typer-helptree helptree`
 ```
 
 ![Screenshot of the typer-helptree herlptree](https://raw.githubusercontent.com/City-of-Memphis-Wastewater/typer-helptree/main/assets/typer_helptree_v0.1.1.jpg)
+
+## How To 
+
+Use helptree in your Typer CLI: 
+
+```python
+# --- Imports ---
+import typer
+from rich.console import Console
+from typer_helptree.helptree import add_typer_helptree # <--- The Secret Sauce
+
+# --- Typical App Instantiation ---
+APP_NAME "your-fancy-typer-cli"
+console = Console()
+app = typer.Typer(
+    name=APP_NAME
+)
+
+# --- The Magic ---
+add_typer_helptree(
+    app = app,
+    console = console)
+
+```
