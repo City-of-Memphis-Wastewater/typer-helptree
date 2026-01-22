@@ -54,7 +54,7 @@ Issues = "https://github.com/city-of-memphis-wastewater/typer-helptree/issues"
 Changelog = "https://raw.githubusercontent.com/city-of-memphis-wastewater/typer-helptree/main/docs/CHANGELOG.md"
 
 [project.scripts]
-typer-helptree = "typer-helptree.cli:app"
+typer-helptree = "typer_helptree.cli:app"
 
 #[project.optional-dependencies]
 
