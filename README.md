@@ -13,7 +13,7 @@ typer-helptree helptree
 
 ## How To 
 
-Use helptree in your Typer CLI: 
+Use `helptree` in your Typer CLI: 
 
 ```python
 # src/your_fancy_app/cli.py
@@ -32,9 +32,7 @@ app = typer.Typer(
 )
 
 # --- The Magic ---
-add_typer_helptree(
-    app = app,
-    console = console)
+add_typer_helptree(app = app, console = console)
 
 ```
 
