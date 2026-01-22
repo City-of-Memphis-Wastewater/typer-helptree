@@ -6,6 +6,12 @@ The format is (read: strives to be) based on [Keep a Changelog](https://keepacha
 
 ---
 
+## [0.1.5] – 2026-01-22
+### Fixed:
+- Expose `add_typer_helptree()` in __init__.py
+
+---
+
 ## [0.1.4] – 2026-01-22
 ### Fixed:
 - Troubleshoot screenshot update.
