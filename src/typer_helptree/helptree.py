@@ -5,10 +5,6 @@
 """
 Experiemental developer-facing function(s).
 
-help_tree_command() used click and typer internals which might change version to version.
-
-This portion of the codebase is MIT licensed. It does not rely on any AGPL-licensed code.
-
 DEV_TYPER_HELP_TREE=1 typer-helptree helptree
 
 ```
@@ -27,9 +23,9 @@ import click
 
 from typer_helptree.version_info import get_version_from_pyproject # change to import from pyhabitat
 
-def add_typer_help_tree(app,
+def add_typer_helptree(app,
                   console):
-    @app.command(name="help-tree",
+    @app.command(name="helptree",
                  #envvar="PDF_ENGINE",
                  help="Show all commands and options in a tree structure.")
     def help_tree_command(ctx: typer.Context):
@@ -49,7 +45,7 @@ def add_typer_help_tree(app,
         for command_name in sorted(root_app_command.commands.keys()):
             command = root_app_command.commands[command_name]
             
-            if command.name == "help-tree":
+            if command.name == "helptree":
                 continue
 
             help_text = command.help.splitlines()[0].strip() if command.help else "No help available."
