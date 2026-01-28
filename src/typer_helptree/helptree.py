@@ -21,10 +21,8 @@ from rich.tree import Tree
 from rich.panel import Panel
 import click
 
-from typer_helptree._version import __version__
 
-
-def add_typer_helptree(app,console,hidden=True):
+def add_typer_helptree(app, console, version: str = "unknown", hidden=True):
     @app.command(
         name="helptree",
         hidden=hidden,
@@ -38,7 +36,7 @@ def add_typer_helptree(app,console,hidden=True):
         
         # 1. Start the Rich Tree structure
         app_tree = Tree(
-            f"[bold blue]{root_app_command.name}[/bold blue] (v{__version__})",
+            f"[bold blue]{root_app_command.name}[/bold blue] (v{version})",
             guide_style="cyan"
         )
 
