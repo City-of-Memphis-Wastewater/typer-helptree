@@ -6,6 +6,12 @@ The format is (read: strives to be) based on [Keep a Changelog](https://keepacha
 
 ---
 
+## [0.1.8] – 2026-01-28
+### Changed:
+- Update versioning to not rely on datacopy of pyproject.toml and instead use _version.__version__
+
+---
+
 ## [0.1.7] – 2026-01-22
 ### Fixed:
 - Remove the erroneous AGPL reference in the pyproject.toml, which had been copied from pdflinkcheck.
