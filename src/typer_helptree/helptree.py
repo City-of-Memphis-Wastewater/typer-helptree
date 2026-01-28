@@ -23,11 +23,11 @@ import click
 
 from typer_helptree.version_info import get_version_from_pyproject # change to import from pyhabitat
 
-def add_typer_helptree(app,
-                  console):
-    @app.command(name="helptree",
-                 #envvar="PDF_ENGINE",
-                 help="Show all commands and options in a tree structure.")
+def add_typer_helptree(app,console):
+    @app.command(
+        name="helptree",
+        hidden=True,
+        help="Show all commands and options in a tree structure.")
     def help_tree_command(ctx: typer.Context):
         """
         Fragile developer-facing function.
@@ -48,7 +48,9 @@ def add_typer_helptree(app,
             if command.name == "helptree":
                 continue
 
-            help_text = command.help.splitlines()[0].strip() if command.help else "No help available."
+            #help_text = command.help.splitlines()[0].strip() if command.help else "No help available."
+            # Instead, this uses Click's internal logic to get the first sentence or short summary
+            help_text = command.get_short_help_str() or "No help available."
 
             command_branch = app_tree.add(f"[bold white]{command.name}[/bold white] - [dim]{help_text}[/dim]")
 
