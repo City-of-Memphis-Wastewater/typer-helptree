@@ -21,7 +21,8 @@ from rich.tree import Tree
 from rich.panel import Panel
 import click
 
-from typer_helptree.version_info import get_version_from_pyproject # change to import from pyhabitat
+from typer_helptree._version import __version__
+
 
 def add_typer_helptree(app,console):
     @app.command(
@@ -37,7 +38,7 @@ def add_typer_helptree(app,console):
         
         # 1. Start the Rich Tree structure
         app_tree = Tree(
-            f"[bold blue]{root_app_command.name}[/bold blue] (v{get_version_from_pyproject()})",
+            f"[bold blue]{root_app_command.name}[/bold blue] (v{__version__})",
             guide_style="cyan"
         )
 

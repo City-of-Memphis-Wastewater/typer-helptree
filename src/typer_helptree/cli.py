@@ -14,7 +14,7 @@ import os
 from importlib.resources import files
 from enum import Enum
 
-from typer_helptree.version_info import get_version_from_pyproject
+from typer_helptree._version import __version__
 
 APP_NAME = "typer-helptree"
 APP_DIR = "typer_helptree"
@@ -28,7 +28,7 @@ os.environ["TERM"] = "xterm-256color"
 
 app = typer.Typer(
     name=APP_NAME,
-    help=f"Visualize your entire CLI, beautifully. (v{get_version_from_pyproject()})",
+    help=f"Visualize your entire CLI, beautifully. (v{__version__})",
     add_completion=False,
     invoke_without_command = True, 
     no_args_is_help = True,
@@ -70,7 +70,7 @@ def main(ctx: typer.Context,
     Main.
     """
     if version:
-        typer.echo(get_version_from_pyproject())
+        typer.echo(__version__)
         raise typer.Exit(code=0)
         
     if ctx.invoked_subcommand is None:
