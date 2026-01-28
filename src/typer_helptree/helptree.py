@@ -24,10 +24,10 @@ import click
 from typer_helptree._version import __version__
 
 
-def add_typer_helptree(app,console):
+def add_typer_helptree(app,console,hidden=True):
     @app.command(
         name="helptree",
-        hidden=True,
+        hidden=hidden,
         help="Show all commands and options in a tree structure.")
     def help_tree_command(ctx: typer.Context):
         """
