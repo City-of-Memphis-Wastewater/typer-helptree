@@ -9,7 +9,7 @@ The `helptree` command can be added to your Typer CLI.
 typer-helptree helptree
 ```
 
-![Screenshot of the typer-helptree helptree](https://raw.githubusercontent.com/City-of-Memphis-Wastewater/typer-helptree/main/assets/typer-helptree_v0.1.5.jpg)
+![Screenshot of the typer-helptree helptree](https://raw.githubusercontent.com/City-of-Memphis-Wastewater/typer-helptree/main/assets/typer-helptree_v0.2.4.png)
 
 ## How To 
 

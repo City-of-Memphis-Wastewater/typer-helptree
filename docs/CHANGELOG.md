@@ -6,6 +6,12 @@ The format is (read: strives to be) based on [Keep a Changelog](https://keepacha
 
 ---
 
+## [0.2.4] – 2026-02-11
+### Changed:
+- Update screenshots.
+
+---
+
 ## [0.2.3] – 2026-02-11
 ### Added:
 - Add .whl, tar.gz, and checksum upload to release via publish.yml
