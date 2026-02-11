@@ -58,11 +58,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Remove non-dist files for PyPI
+        run: rm dist/checksums.txt
+
       - name: Publish to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
-          # Tell the action exactly which files to ship to PyPI
           packages-dir: dist/
-          # This glob pattern ensures checksums.txt is ignored by PyPI
-          glob_pattern: "*.whl *.tar.gz"
-        # Trusted Publishing: no token needed — uses OIDC automatically
