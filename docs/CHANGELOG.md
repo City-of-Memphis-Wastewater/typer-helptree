@@ -6,6 +6,17 @@ The format is (read: strives to be) based on [Keep a Changelog](https://keepacha
 
 ---
 
+## [0.1.11] – 2026-02-11
+### Added:
+- io.py
+- Flags: --export-json and --export-txt
+
+### Changed:
+- Move contents of helptree.py -> cli_helptree.py, so that helptre.py can be used as the core functionality.
+- Better separation of concerns.
+
+---
+
 ## [0.1.8] – 2026-01-28
 ### Changed:
 - Update versioning to not rely on datacopy of pyproject.toml and instead use _version.__version__

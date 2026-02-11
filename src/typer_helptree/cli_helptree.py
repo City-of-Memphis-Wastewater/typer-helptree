@@ -18,12 +18,11 @@ from __future__ import annotations
 import typer
 from rich.tree import Tree 
 from rich.panel import Panel
-import click
 
 from .helptree import build_help_tree
 
 
-def add_typer_helptree(app, console, version: str = "unknown", hidden=True):
+def add_typer_helptree(app, console, version: str = "unknown", hidden: bool =True):
     @app.command(name="helptree", hidden = hidden, help="Visualize CLI structure.")
     def help_tree_command(
         ctx: typer.Context,
