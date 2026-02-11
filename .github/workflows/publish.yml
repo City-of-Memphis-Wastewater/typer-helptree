@@ -11,7 +11,7 @@ jobs:
     name: Build and upload to PyPI
     runs-on: ubuntu-latest
 
-    environment: pypi  # Optional but recommended: create this environment in repo settings
+    environment: pypi
 
     permissions:
       id-token: write   # Required for Trusted Publishing (OIDC)
@@ -31,19 +31,32 @@ jobs:
       - name: Install uv
         run: pip install --upgrade uv
 
-      - name: Install build tool via uv (system-wide, no venv needed)
-        run: uv tool install build --upgrade
-        
+      #- name: Install build tool via uv (system-wide, no venv needed)
+      #  run: uv tool install build --upgrade
+
       - name: Build package (sdist + wheel)
         run: uv build
 
-      #- name: Install the built package (sanity check)
-      #  run: uv pip install dist/*.whl --system
-
       - name: Test CLI entrypoint
         run: |
-          #dworshak --version
           uv run typer-helptree --help
+
+      - name: Generate Checksums
+        run: |
+          cd dist
+          sha256sum * > checksums.txt
+          echo "Generated SHA256 hashes for build artifacts."
+
+      - name: Upload Artifacts to GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            dist/*.whl
+            dist/*.tar.gz
+            dist/checksums.txt
+        continue-on-error: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Publish to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
