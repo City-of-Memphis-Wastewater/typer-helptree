@@ -9,6 +9,7 @@ import datetime
 from pathlib import Path
 from typing import Dict, Any
 import pyhabitat
+from enum import Enum
 
 # --- Configuration ---
 try:
@@ -34,6 +35,28 @@ def setup_error_logger():
 
 error_logger = setup_error_logger()
 
+# --- JSON serialization safety ---
+
+class UniversalEncoder(json.JSONEncoder):
+    """
+    A general-purpose JSON encoder that handles Enums, 
+    objects with __str__ methods, and other non-serializable types.
+    """
+    def default(self, obj):
+        # 1. Handle Enums (Return the raw value like 'console')
+        if isinstance(obj, Enum):
+            return obj.value
+        
+        # 2. Handle types/classes (Return the name like 'Choice' or 'Path')
+        if isinstance(obj, type):
+            return obj.__name__
+            
+        # 3. Fallback: If it can be a string, make it a string
+        try:
+            return super().default(obj)
+        except TypeError:
+            return str(obj)
+        
 # --- Export Functionality ---
 
 def export_help_json(data: Dict[str, Any], app_name: str) -> Path:
@@ -43,7 +66,7 @@ def export_help_json(data: Dict[str, Any], app_name: str) -> Path:
 
     try:
         with open(output_path, 'w', encoding='utf-8') as f:
-            json.dump(data, f, indent=4)
+            json.dump(data, f, indent=4, cls=UniversalEncoder)
         print(f"JSON structure exported: {get_friendly_path(output_path)}")
         return output_path
     except Exception as e:

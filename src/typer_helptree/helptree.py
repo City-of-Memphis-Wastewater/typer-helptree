@@ -5,6 +5,7 @@ from __future__ import annotations
 import click
 from rich.tree import Tree
 from typing import Dict, Any, List
+from enum import Enum
 
 def _get_param_data_(param: click.Parameter) -> Dict[str, Any]:
     """
@@ -20,13 +21,21 @@ def _get_param_data_(param: click.Parameter) -> Dict[str, Any]:
 
 def _get_param_data(param: click.Parameter) -> Dict[str, Any]:
     """Extracts detailed metadata from a Click parameter."""
+
+    # Handle the default value safely
+    default_val = param.default
+    if isinstance(default_val, Enum):
+        default_val = default_val.value
+    elif default_val is not None and not isinstance(default_val, (str, int, float, bool, list, dict)):
+        default_val = str(default_val)
+
     return {
         "name": param.name,
         "opts": param.opts,
         "secondary_opts": param.secondary_opts,
         "type": str(param.type),
         "required": param.required,
-        "default": param.default if not param.nargs == -1 else None, # Handle variadic defaults
+        "default": default_val,    # Now safe for Enums/Objects
         "help": param.help or "",
         "hidden": getattr(param, "hidden", False),
         "is_flag": getattr(param, "is_flag", False),
@@ -99,10 +108,11 @@ def build_help_tree(click_command: click.Command, tree_node: Tree, ctx: click.Co
 def build_help_data(click_command: click.Command, ctx: click.Context, version: str = None) -> Dict[str, Any]:
     """Recursively builds a dictionary for JSON export, utilizing _get_param_data."""
     node_data = {
-        "name": click_command.name,
-        "help": click_command.get_short_help_str(),
+        "name": click_command.name or "app",
+        "help": getattr(click_command, 'help', None) or click_command.get_short_help_str() or "",
         "parameters": [],
-        "subcommands": []
+        "subcommands": [],
+        "is_group": isinstance(click_command, click.Group), # Added metadata
     }
 
     # Only add version to the root node
