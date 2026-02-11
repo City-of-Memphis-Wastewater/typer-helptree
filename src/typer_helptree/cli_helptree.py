@@ -23,7 +23,7 @@ from .helptree import build_help_tree
 
 
 def add_typer_helptree(app, console, version: str = "unknown", hidden: bool =True):
-    @app.command(name="helptree", hidden = hidden, help="Visualize CLI structure.")
+    @app.command(name="helptree", hidden = hidden, help="Visualize your entire CLI, beautifully. Export to JSON and TXT.")
     def help_tree_command(
         ctx: typer.Context,
         version: str = version,
