@@ -6,7 +6,7 @@ The format is (read: strives to be) based on [Keep a Changelog](https://keepacha
 
 ---
 
-## [0.1.11] – 2026-02-11
+## [0.2.1] – 2026-02-11
 ### Added:
 - io.py
 - Flags: --export-json and --export-txt
