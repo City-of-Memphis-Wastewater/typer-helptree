@@ -8,12 +8,16 @@ The format is (read: strives to be) based on [Keep a Changelog](https://keepacha
 
 ## [0.2.1] – 2026-02-11
 ### Added:
-- io.py
+- io.py, for JSON and TXT file export
 - Flags: --export-json and --export-txt
 
 ### Changed:
 - Move contents of helptree.py -> cli_helptree.py, so that helptre.py can be used as the core functionality.
 - Better separation of concerns.
+- Don't truncate short descriptions.
+
+### Fixed:
+- Before, only flat apps could be seen. Now there is recursive investigation of click groups so that nested sub apps can be represented.
 
 ---
 
