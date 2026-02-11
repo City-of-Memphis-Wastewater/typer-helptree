@@ -18,13 +18,16 @@ Use `helptree` in your Typer CLI:
 ```python
 # src/your_fancy_app/cli.py
 
-# --- Imports ---
+# --- External Imports ---
 import typer
 from rich.console import Console
 # Import the add_typer_helptree command.
 from typer_helptree.helptree import add_typer_helptree
 
-# --- Typical App Instantiation ---
+# --- Internal Imports ---
+from ._version import __version__ # or however you do this.
+
+# --- Typical Typer App Instantiation ---
 APP_NAME "your-fancy-app"
 console = Console()
 app = typer.Typer(
@@ -33,7 +36,7 @@ app = typer.Typer(
 
 # --- The Magic ---
 
-add_typer_helptree(app=app, console=console, version = __version__,hidden=True)
+add_typer_helptree(app=app, console=console, version = __version__, hidden=True)
 
 ```
 
