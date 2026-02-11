@@ -15,7 +15,7 @@ jobs:
 
     permissions:
       id-token: write   # Required for Trusted Publishing (OIDC)
-      contents: read    # Needed to checkout code
+      contents: write    # Needed to upload artifacts 
 
     steps:
       - name: Checkout repository
@@ -60,4 +60,9 @@ jobs:
 
       - name: Publish to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          # Tell the action exactly which files to ship to PyPI
+          packages-dir: dist/
+          # This glob pattern ensures checksums.txt is ignored by PyPI
+          glob_pattern: "*.whl *.tar.gz"
         # Trusted Publishing: no token needed — uses OIDC automatically
