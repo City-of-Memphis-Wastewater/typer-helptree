@@ -1,6 +1,5 @@
 [project]
 name = "typer-helptree"
-#version = "0.1.7"
 dynamic = ["version"]
 description = "Display your entire CLI structure, beautifully. Screenshot ready."
 readme = "README.md"

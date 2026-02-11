@@ -74,12 +74,8 @@ def main(ctx: typer.Context,
         raise typer.Exit(code=0)
 
 
-# helptree() command: fragile, experimental, defaults to not being included.
-#if True or os.environ.get('DEV_TYPER_HELP_TREE',0) in ('true','1'):
 from typer_helptree.cli_helptree import add_typer_helptree
-add_typer_helptree(
-    app = app,
-    console = console)
+add_typer_helptree(app=app, console=console, version = __version__,hidden=True)
 
 # Create tools sub-group
 tools_app = typer.Typer(help="Additional utility features and maintenance tools.")
