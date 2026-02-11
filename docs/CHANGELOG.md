@@ -6,6 +6,14 @@ The format is (read: strives to be) based on [Keep a Changelog](https://keepacha
 
 ---
 
+## [0.2.2] – 2026-02-11
+### Fixed:
+- Stabilie demo cli.py contents.
+- Remove erroneous AGPL3+ label.
+- Fix browse-exports command to reference the path in io.py
+
+---
+
 ## [0.2.1] – 2026-02-11
 ### Added:
 - io.py, for JSON and TXT file export
