@@ -3,14 +3,13 @@
 # src/typer_helptree/dev.py
 
 """
-Experiemental developer-facing function(s).
+Developer-facing CLI visibility. Great for screenshotting.
 
-DEV_TYPER_HELP_TREE=1 typer-helptree helptree
-
+```bash
+typer-helptree helptree
 ```
-import os
-os.environ["DEV_TYPER_HELP_TREE"] = "true"
 
+```python
 import typer_helptree
 subprocess.run("typer-helptree", "helptree")
 ```
