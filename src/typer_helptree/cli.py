@@ -54,12 +54,6 @@ if "--show-command" in sys.argv or "--debug" in sys.argv: # requires that --show
 def main(ctx: typer.Context,
     version: Optional[bool] = typer.Option(
     None, "--version", is_flag=True, help="Show the version."
-    ),
-    debug: bool = typer.Option(
-        False, "--debug", is_flag=True, help="Enable verbose debug logging and echo the full command string."
-    ),
-    show_command: bool = typer.Option(
-        False, "--show-command", is_flag=True, help="Echo the full command string to the console before execution."
     )
     ):
     """
@@ -75,7 +69,7 @@ def main(ctx: typer.Context,
 
 
 from typer_helptree.cli_helptree import add_typer_helptree
-add_typer_helptree(app=app, console=console, version = __version__,hidden=True)
+add_typer_helptree(app=app, console=console, version = __version__,hidden=False)
 
 # Create tools sub-group
 tools_app = typer.Typer(help="Additional utility features and maintenance tools.")
@@ -130,7 +124,7 @@ def docs_command(
         try:
             license_path = files(f"{APP_DIR}.data") / "LICENSE"
             license_text = license_path.read_text(encoding="utf-8")
-            console.print(f"\n[bold green]=== GNU AFFERO GENERAL PUBLIC LICENSE V3+ ===[/bold green]")
+            console.print(f"\n[bold green]=== LICENSE ===[/bold green]")
             console.print(license_text, highlight=False)
 
         except FileNotFoundError:
