@@ -3,16 +3,12 @@
 # src/typer_helptree/cli.py
 from __future__ import annotations
 import typer
-from typing import Literal, List
-from typer.models import OptionInfo
 from rich.console import Console
-from pathlib import Path
 from typing import Dict, Optional, Union, List
 import pyhabitat
 import sys
 import os
 from importlib.resources import files
-from enum import Enum
 
 from typer_helptree._version import __version__
 
@@ -80,7 +76,7 @@ def main(ctx: typer.Context,
 
 # helptree() command: fragile, experimental, defaults to not being included.
 #if True or os.environ.get('DEV_TYPER_HELP_TREE',0) in ('true','1'):
-from typer_helptree.helptree import add_typer_helptree
+from typer_helptree.cli_helptree import add_typer_helptree
 add_typer_helptree(
     app = app,
     console = console)
@@ -97,7 +93,7 @@ def tools_nested_tool():
 @tools_app.command(name="browse-exports")
 def tools_browse_exports():
     """Open the system file explorer at the report output directory."""
-    from typer_helptree.helpers import get_export_path
+    from typer_helptree.helptree import get_export_path
     
     target_dir = get_export_path()
     console.print(f"Opening: [bold cyan]{target_dir}[/bold cyan]")
