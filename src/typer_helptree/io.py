@@ -98,3 +98,6 @@ def get_friendly_path(full_path: Path) -> str:
     except Exception:
         pass
     return str(full_path)
+
+def get_export_path()-> Path:
+    return HELPTREE_HOME

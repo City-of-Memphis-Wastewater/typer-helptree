@@ -89,7 +89,7 @@ def tools_nested_tool():
 @tools_app.command(name="browse-exports")
 def tools_browse_exports():
     """Open the system file explorer at the report output directory."""
-    from typer_helptree.helptree import get_export_path
+    from typer_helptree.io import get_export_path
     
     target_dir = get_export_path()
     console.print(f"Opening: [bold cyan]{target_dir}[/bold cyan]")
