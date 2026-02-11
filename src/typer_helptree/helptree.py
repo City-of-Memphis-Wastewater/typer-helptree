@@ -6,7 +6,7 @@ import click
 from rich.tree import Tree
 from typing import Dict, Any, List
 
-def _get_param_data(param: click.Parameter) -> Dict[str, Any]:
+def _get_param_data_(param: click.Parameter) -> Dict[str, Any]:
     """
     Extracts raw metadata from a Click parameter for JSON export.
     Uses original logic to handle default values and sentinel values.
@@ -16,6 +16,21 @@ def _get_param_data(param: click.Parameter) -> Dict[str, Any]:
         "opts": getattr(param, 'opts', []),
         "help": getattr(param, 'help', ""),
         "default": str(param.default) if param.default not in (None, click.core.UNSET) else None
+    }
+
+def _get_param_data(param: click.Parameter) -> Dict[str, Any]:
+    """Extracts detailed metadata from a Click parameter."""
+    return {
+        "name": param.name,
+        "opts": param.opts,
+        "secondary_opts": param.secondary_opts,
+        "type": str(param.type),
+        "required": param.required,
+        "default": param.default if not param.nargs == -1 else None, # Handle variadic defaults
+        "help": param.help or "",
+        "hidden": getattr(param, "hidden", False),
+        "is_flag": getattr(param, "is_flag", False),
+        "envvar": param.envvar,
     }
 
 def _format_param_label(param: click.Parameter) -> str:
@@ -68,10 +83,20 @@ def build_help_tree(click_command: click.Command, tree_node: Tree, ctx: click.Co
             #sub_node = tree_node.add(f"[bold white]{cmd.name}[/bold white] - [dim]{short_help}[/dim]")
             raw_help = cmd.help or ""
             full_description = raw_help.splitlines()[0].strip() if raw_help else "No description available."
-            sub_node = tree_node.add(f"[bold white]{cmd.name}[/bold white] - [dim]{full_description}[/dim]")
+            
+            #sub_node = tree_node.add(f"[bold white]{cmd.name}[/bold white] - [dim]{full_description}[/dim]")
+
+            # Use text labels and color to differentiate apps from commands
+            if isinstance(cmd, click.Group):
+                label = f"[bold cyan]{cmd_name}[/bold cyan] [dim](app)[/dim]"
+            else:
+                label = f"[bold white]{cmd_name}[/bold white]"
+
+            sub_node = tree_node.add(f"{label} - [dim]{full_description}[/dim]")
+
             build_help_tree(cmd, sub_node, ctx)
 
-def build_help_data(click_command: click.Command, ctx: click.Context) -> Dict[str, Any]:
+def build_help_data(click_command: click.Command, ctx: click.Context, version: str = None) -> Dict[str, Any]:
     """Recursively builds a dictionary for JSON export, utilizing _get_param_data."""
     node_data = {
         "name": click_command.name,
@@ -80,9 +105,16 @@ def build_help_data(click_command: click.Command, ctx: click.Context) -> Dict[st
         "subcommands": []
     }
 
+    # Only add version to the root node
+    if version:
+        node_data["version"] = version
+
     if hasattr(click_command, 'params'):
         for param in click_command.params:
             if hasattr(param, 'opts') and any(opt in ("-h", "--help") for opt in param.opts):
+                continue
+            # Skip internal helptree flags # MAINTENANCE BURDEN
+            if param.name in ["export_json", "export_txt"]:
                 continue
             # Logic restored: uses the helper function
             node_data["parameters"].append(_get_param_data(param))
@@ -90,6 +122,7 @@ def build_help_data(click_command: click.Command, ctx: click.Context) -> Dict[st
     if isinstance(click_command, click.Group):
         for cmd_name in sorted(click_command.list_commands(ctx)):
             cmd = click_command.get_command(ctx, cmd_name)
+            # Skip helptree recursion and hidden commands # MAINTENANCE BURDEN
             if not cmd or cmd.name == "helptree":
                 continue
             node_data["subcommands"].append(build_help_data(cmd, ctx))
