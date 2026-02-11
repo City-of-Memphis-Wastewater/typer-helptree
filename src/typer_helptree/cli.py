@@ -34,22 +34,6 @@ app = typer.Typer(
 )
 
 
-def debug_callback(value: bool):
-#def debug_callback(ctx: typer.Context, value: bool):
-    if value:
-        # This runs IMMEDIATELY when --debug is parsed, even before --help
-         # 1. Access the list of all command-line arguments
-        full_command_list = sys.argv
-        # 2. Join the list into a single string to recreate the command
-        command_string = " ".join(full_command_list)
-        # 3. Print the command
-        typer.echo(f"command:\n{command_string}\n")
-    return value
-
-if "--show-command" in sys.argv or "--debug" in sys.argv: # requires that --show-command flag be used before the sub command
-    debug_callback(True)
-
-    
 @app.callback()
 def main(ctx: typer.Context,
     version: Optional[bool] = typer.Option(
@@ -111,7 +95,7 @@ def docs_command(
         # If no flags are provided, show the help message for the docs subcommand.
         # Use ctx.invoke(ctx.command.get_help, ctx) if you want to print help immediately.
         # Otherwise, the default behavior (showing help) works fine, but we'll add a message.
-        console.print("[yellow]Please use either the --license or --readme flag.[/yellow]")
+        console.print("[yellow]Please use either the --license flag and/or the --readme flag to print.[/yellow]")
         return # Typer will automatically show the help message.
 
     if pyhabitat.is_in_git_repo():

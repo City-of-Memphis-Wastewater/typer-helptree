@@ -32,7 +32,8 @@ app = typer.Typer(
 )
 
 # --- The Magic ---
-add_typer_helptree(app = app, console = console)
+
+add_typer_helptree(app=app, console=console, version = __version__,hidden=True)
 
 ```
 
