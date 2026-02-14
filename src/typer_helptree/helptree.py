@@ -81,7 +81,7 @@ def _add_parameters_to_node(click_command: click.Command, tree_node: Tree) -> No
 def build_help_tree(click_command: click.Command, tree_node: Tree, ctx: click.Context) -> None:
     """Builds the Rich Tree structure recursively."""
     _add_parameters_to_node(click_command, tree_node)
-
+    '''
     if isinstance(click_command, click.Group):
         for cmd_name in sorted(click_command.list_commands(ctx)):
             cmd = click_command.get_command(ctx, cmd_name)
@@ -103,6 +103,46 @@ def build_help_tree(click_command: click.Command, tree_node: Tree, ctx: click.Co
 
             sub_node = tree_node.add(f"{label} - [dim]{full_description}[/dim]")
 
+            build_help_tree(cmd, sub_node, ctx)
+    '''
+    
+    if isinstance(click_command, click.Group):
+        command_names = []
+        group_names = []
+
+        for cmd_name in click_command.list_commands(ctx):
+            cmd = click_command.get_command(ctx, cmd_name)
+            if not cmd or cmd.name == "helptree":
+                continue
+            if isinstance(cmd, click.Group):
+                group_names.append(cmd_name)
+            else:
+                command_names.append(cmd_name)
+
+        # Sort for stability
+        command_names.sort()
+        group_names.sort()
+
+        # Render commands first
+        for cmd_name in command_names:
+            cmd = click_command.get_command(ctx, cmd_name)
+            raw_help = cmd.help or ""
+            full_description = raw_help.splitlines()[0].strip() if raw_help else "No description available."
+
+            sub_node = tree_node.add(
+                f"[bold white]{cmd_name}[/bold white] - [dim]{full_description}[/dim]"
+            )
+            build_help_tree(cmd, sub_node, ctx)
+
+        # Render sub-apps second
+        for cmd_name in group_names:
+            cmd = click_command.get_command(ctx, cmd_name)
+            raw_help = cmd.help or ""
+            full_description = raw_help.splitlines()[0].strip() if raw_help else "No description available."
+
+            sub_node = tree_node.add(
+                f"[bold cyan]{cmd_name}[/bold cyan] [dim](app)[/dim] - [dim]{full_description}[/dim]"
+            )
             build_help_tree(cmd, sub_node, ctx)
 
 def build_help_data(click_command: click.Command, ctx: click.Context, version: str = None) -> Dict[str, Any]:
