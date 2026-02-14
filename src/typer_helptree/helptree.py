@@ -81,31 +81,7 @@ def _add_parameters_to_node(click_command: click.Command, tree_node: Tree) -> No
 def build_help_tree(click_command: click.Command, tree_node: Tree, ctx: click.Context) -> None:
     """Builds the Rich Tree structure recursively."""
     _add_parameters_to_node(click_command, tree_node)
-    '''
-    if isinstance(click_command, click.Group):
-        for cmd_name in sorted(click_command.list_commands(ctx)):
-            cmd = click_command.get_command(ctx, cmd_name)
-            if not cmd or cmd.name == "helptree":
-                continue
-            
-            #short_help = cmd.get_short_help_str() or "No description available."
-            #sub_node = tree_node.add(f"[bold white]{cmd.name}[/bold white] - [dim]{short_help}[/dim]")
-            raw_help = cmd.help or ""
-            full_description = raw_help.splitlines()[0].strip() if raw_help else "No description available."
-            
-            #sub_node = tree_node.add(f"[bold white]{cmd.name}[/bold white] - [dim]{full_description}[/dim]")
 
-            # Use text labels and color to differentiate apps from commands
-            if isinstance(cmd, click.Group):
-                label = f"[bold cyan]{cmd_name}[/bold cyan] [dim](app)[/dim]"
-            else:
-                label = f"[bold white]{cmd_name}[/bold white]"
-
-            sub_node = tree_node.add(f"{label} - [dim]{full_description}[/dim]")
-
-            build_help_tree(cmd, sub_node, ctx)
-    '''
-    
     if isinstance(click_command, click.Group):
         command_names = []
         group_names = []
@@ -168,7 +144,7 @@ def build_help_data(click_command: click.Command, ctx: click.Context, version: s
                 continue
             # Logic restored: uses the helper function
             node_data["parameters"].append(_get_param_data(param))
-
+    '''
     if isinstance(click_command, click.Group):
         for cmd_name in sorted(click_command.list_commands(ctx)):
             cmd = click_command.get_command(ctx, cmd_name)
@@ -176,5 +152,37 @@ def build_help_data(click_command: click.Command, ctx: click.Context, version: s
             if not cmd or cmd.name == "helptree":
                 continue
             node_data["subcommands"].append(build_help_data(cmd, ctx))
+    '''
+    if isinstance(click_command, click.Group):
+        command_names: list[str] = []
+        group_names: list[str] = []
+
+        for cmd_name in click_command.list_commands(ctx):
+            cmd = click_command.get_command(ctx, cmd_name)
+            if not cmd or cmd.name == "helptree":
+                continue
+
+            if isinstance(cmd, click.Group):
+                group_names.append(cmd_name)
+            else:
+                command_names.append(cmd_name)
+
+        # Stable ordering
+        command_names.sort()
+        group_names.sort()
+
+        # Commands first
+        for cmd_name in command_names:
+            cmd = click_command.get_command(ctx, cmd_name)
+            node_data["subcommands"].append(
+                build_help_data(cmd, ctx)
+            )
+
+        # Sub-apps second
+        for cmd_name in group_names:
+            cmd = click_command.get_command(ctx, cmd_name)
+            node_data["subcommands"].append(
+                build_help_data(cmd, ctx)
+            )
 
     return node_data
