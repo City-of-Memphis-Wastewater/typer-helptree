@@ -123,12 +123,20 @@ def build_help_tree(click_command: click.Command, tree_node: Tree, ctx: click.Co
 
 def build_help_data(click_command: click.Command, ctx: click.Context, version: str = None) -> Dict[str, Any]:
     """Recursively builds a dictionary for JSON export, utilizing _get_param_data."""
+
+    is_group = isinstance(click_command, click.Group)
+
     node_data = {
         "name": click_command.name or "app",
-        "help": getattr(click_command, 'help', None) or click_command.get_short_help_str() or "",
+        "help": (
+            getattr(click_command, "help", None)
+            or click_command.get_short_help_str()
+            or ""
+        ),
+        "kind": "app" if is_group else "command",
+        "is_group": is_group,          # kept for compatibility
         "parameters": [],
         "subcommands": [],
-        "is_group": isinstance(click_command, click.Group), # Added metadata
     }
 
     # Only add version to the root node
@@ -144,15 +152,7 @@ def build_help_data(click_command: click.Command, ctx: click.Context, version: s
                 continue
             # Logic restored: uses the helper function
             node_data["parameters"].append(_get_param_data(param))
-    '''
-    if isinstance(click_command, click.Group):
-        for cmd_name in sorted(click_command.list_commands(ctx)):
-            cmd = click_command.get_command(ctx, cmd_name)
-            # Skip helptree recursion and hidden commands # MAINTENANCE BURDEN
-            if not cmd or cmd.name == "helptree":
-                continue
-            node_data["subcommands"].append(build_help_data(cmd, ctx))
-    '''
+
     if isinstance(click_command, click.Group):
         command_names: list[str] = []
         group_names: list[str] = []
