@@ -6,6 +6,16 @@ The format is (read: strives to be) based on [Keep a Changelog](https://keepacha
 
 ---
 
+## [0.3.1] - 2026-02-13
+### Changed:
+- Improve metadata by adding kind key, for app versus command.
+- Establish sane ordering with commands first and sub apps after, in both data for JSON and in helptree prints.
+
+## Internal:
+- Bump to 0.3.1 to celebrate ongoing stability.
+
+---
+
 ## [0.2.4] – 2026-02-11
 ### Changed:
 - Update screenshots.
