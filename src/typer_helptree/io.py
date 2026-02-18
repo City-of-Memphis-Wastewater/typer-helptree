@@ -62,7 +62,7 @@ class UniversalEncoder(json.JSONEncoder):
 def export_help_json(data: Dict[str, Any], app_name: str, version: str, use_assets_dir: bool = False) -> Path:
     """Exports the CLI structure as a machine-readable JSON file."""
     timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
-    output_path = get_dest_dir(use_assets_dir) / f"{app_name}_v{version}__tree_{timestamp}.json"
+    output_path = get_dest_dir(use_assets_dir) / f"{app_name}_v{version}_tree_{timestamp}.json"
 
     try:
         with open(output_path, 'w', encoding='utf-8') as f:
