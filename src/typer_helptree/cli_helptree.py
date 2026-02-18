@@ -18,6 +18,7 @@ from __future__ import annotations
 import typer
 from rich.tree import Tree 
 from rich.panel import Panel
+from rich.console import Console
 
 from .helptree import build_help_tree
 
@@ -51,7 +52,6 @@ def add_typer_helptree(app, console, version: str = "unknown", hidden: bool =Tru
         if export_txt:
             from typer_helptree.io import export_help_txt
             # Capture the Rich tree as plain text using a dummy console
-            from rich.console import Console
             capture_console = Console(width=200, force_terminal=False, color_system=None)
             with capture_console.capture() as capture:
                 capture_console.print(app_tree)

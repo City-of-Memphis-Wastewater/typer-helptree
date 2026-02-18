@@ -86,11 +86,17 @@ def export_help_txt(text_content: str, app_name: str) -> Path:
         error_logger.error(f"TXT export failed: {e}", exc_info=True)
         raise RuntimeError(f"TXT export failed: {e}")
 
-def export_help_svg(console, app_name: str) -> Path:
+def export_help_svg(console, app_name: str, version:str, cwd: bool = False) -> Path:
     """Exports the recorded console content as an SVG file."""
-    timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
-    output_path = HELPTREE_HOME / f"{app_name}_tree_{timestamp}.svg"
-
+    #timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+    #output_path = HELPTREE_HOME / f"{app_name}_tree_{timestamp}.svg"
+    if cwd:
+        assets_dir = Path.cwd() / "assets"
+        assets_dir.mkdir(parents=True, exist_ok=True)
+        output_path = assets_dir / f"{app_name}_v{version}_helptree.svg"
+    else:
+        output_path = HELPTREE_HOME / f"{app_name}_v{version}_helptree.svg"
+    
     try:
         # Rich's console must have record=True for this to work
         console.save_svg(str(output_path), title=f"{app_name} CLI Help Tree")
