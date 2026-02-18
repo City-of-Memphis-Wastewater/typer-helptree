@@ -92,11 +92,12 @@ def export_help_svg(console, app_name: str, version:str, cwd: bool = False) -> P
     #output_path = HELPTREE_HOME / f"{app_name}_tree_{timestamp}.svg"
     if cwd:
         assets_dir = Path.cwd() / "assets"
-        assets_dir.mkdir(parents=True, exist_ok=True)
         output_path = assets_dir / f"{app_name}_v{version}_helptree.svg"
     else:
         output_path = HELPTREE_HOME / f"{app_name}_v{version}_helptree.svg"
-    
+
+    output_path.mkdir(parents=True, exist_ok=True)
+        
     try:
         # Rich's console must have record=True for this to work
         console.save_svg(str(output_path), title=f"{app_name} CLI Help Tree")
