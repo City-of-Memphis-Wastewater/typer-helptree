@@ -59,10 +59,10 @@ class UniversalEncoder(json.JSONEncoder):
         
 # --- Export Functionality ---
 
-def export_help_json(data: Dict[str, Any], app_name: str) -> Path:
+def export_help_json(data: Dict[str, Any], app_name: str, version: str, use_assets_dir: bool = False) -> Path:
     """Exports the CLI structure as a machine-readable JSON file."""
     timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
-    output_path = HELPTREE_HOME / f"{app_name}_tree_{timestamp}.json"
+    output_path = get_dest_dir(use_assets_dir) / f"{app_name}_v{version}__tree_{timestamp}.json"
 
     try:
         with open(output_path, 'w', encoding='utf-8') as f:
@@ -73,10 +73,10 @@ def export_help_json(data: Dict[str, Any], app_name: str) -> Path:
         error_logger.error(f"JSON export failed: {e}", exc_info=True)
         raise RuntimeError(f"JSON export failed: {e}")
 
-def export_help_txt(text_content: str, app_name: str) -> Path:
+def export_help_txt(text_content: str, app_name: str, version: str, use_assets_dir: bool = False) -> Path:
     """Exports the CLI structure as a plain text file."""
     timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
-    output_path = HELPTREE_HOME / f"{app_name}_tree_{timestamp}.txt"
+    output_path = get_dest_dir(use_assets_dir) / f"{app_name}_v{version}_tree_{timestamp}.txt"
 
     try:
         output_path.write_text(text_content, encoding='utf-8')
@@ -86,18 +86,12 @@ def export_help_txt(text_content: str, app_name: str) -> Path:
         error_logger.error(f"TXT export failed: {e}", exc_info=True)
         raise RuntimeError(f"TXT export failed: {e}")
 
-def export_help_svg(console, app_name: str, version:str, cwd: bool = False) -> Path:
+def export_help_svg(console, app_name: str, version:str, use_assets_dir: bool = False) -> Path:
     """Exports the recorded console content as an SVG file."""
     #timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
     #output_path = HELPTREE_HOME / f"{app_name}_tree_{timestamp}.svg"
-    if cwd:
-        assets_dir = Path.cwd() / "assets"
-        output_path = assets_dir / f"{app_name}_v{version}_helptree.svg"
-    else:
-        output_path = HELPTREE_HOME / f"{app_name}_v{version}_helptree.svg"
+    output_path = get_dest_dir(use_assets_dir) / f"{app_name}_v{version}_helptree.svg"
 
-    output_path.parent.mkdir(parents=True, exist_ok=True)
-        
     try:
         # Rich's console must have record=True for this to work
         console.save_svg(str(output_path), title=f"{app_name} CLI Help Tree")
@@ -108,6 +102,17 @@ def export_help_svg(console, app_name: str, version:str, cwd: bool = False) -> P
         raise RuntimeError(f"SVG export failed: {e}")
 
 # --- Helpers --- 
+
+def get_dest_dir(use_assets: bool = False) -> Path:
+    """Returns the target directory based on the --assets flag."""
+    if use_assets:
+        dest = Path.cwd() / "assets"
+    else:
+        dest = HELPTREE_HOME
+    
+    dest.mkdir(parents=True, exist_ok=True)
+    return dest
+    
 def get_friendly_path(full_path: Path) -> str:
     """Returns absolute path on Windows or tilde-shortened path on Unix."""
     if pyhabitat.on_windows():
