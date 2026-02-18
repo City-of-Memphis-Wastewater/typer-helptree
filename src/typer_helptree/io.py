@@ -86,6 +86,21 @@ def export_help_txt(text_content: str, app_name: str) -> Path:
         error_logger.error(f"TXT export failed: {e}", exc_info=True)
         raise RuntimeError(f"TXT export failed: {e}")
 
+def export_help_svg(console, app_name: str) -> Path:
+    """Exports the recorded console content as an SVG file."""
+    timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+    output_path = HELPTREE_HOME / f"{app_name}_tree_{timestamp}.svg"
+
+    try:
+        # Rich's console must have record=True for this to work
+        console.save_svg(str(output_path), title=f"{app_name} CLI Help Tree")
+        print(f"SVG structure exported: {get_friendly_path(output_path)}")
+        return output_path
+    except Exception as e:
+        error_logger.error(f"SVG export failed: {e}", exc_info=True)
+        raise RuntimeError(f"SVG export failed: {e}")
+
+# --- Helpers --- 
 def get_friendly_path(full_path: Path) -> str:
     """Returns absolute path on Windows or tilde-shortened path on Unix."""
     if pyhabitat.on_windows():
@@ -101,3 +116,4 @@ def get_friendly_path(full_path: Path) -> str:
 
 def get_export_path()-> Path:
     return HELPTREE_HOME
+
