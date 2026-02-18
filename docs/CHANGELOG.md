@@ -6,6 +6,13 @@ The format is (read: strives to be) based on [Keep a Changelog](https://keepacha
 
 ---
 
+## [0.2.6] - 2026-02-17
+### Added:
+- io.export_help_svg()
+- export_svg flag to cli_helptree.py
+
+---
+
 ## [0.2.5] - 2026-02-13
 ### Changed:
 - Improve metadata by adding kind key, for app versus command.
