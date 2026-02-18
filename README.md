@@ -16,7 +16,7 @@ typer-helptree helptree
 Use `helptree` in your Typer CLI: 
 
 ```python
-# src/your_fancy_app/cli.py
+# src/yourtyperapp/cli.py
 
 # --- External Imports ---
 import typer
@@ -28,7 +28,7 @@ from typer_helptree.helptree import add_typer_helptree
 from ._version import __version__ # or however you do this.
 
 # --- Typical Typer App Instantiation ---
-APP_NAME "your-fancy-app"
+APP_NAME "yourtyperapp"
 console = Console()
 app = typer.Typer(
     name=APP_NAME
@@ -43,13 +43,13 @@ add_typer_helptree(app=app, console=console, version = __version__, hidden=True)
 And then, from the command line:
 
 ```bash
-yourtypercli helptree
+yourtyperapp helptree
 ```
 
 To export an SVG to your project ./assets dir:
 
 ```bash
-yourtypercli helptree --export-svg --assets
+yourtyperapp helptree --export-svg --assets
 ```
 
 
