@@ -43,8 +43,16 @@ add_typer_helptree(app=app, console=console, version = __version__, hidden=True)
 And then, from the command line:
 
 ```bash
-your-fancy-app helptree
+yourtypercli helptree
 ```
+
+To export an SVG to your project ./assets dir:
+
+```bash
+yourtypercli helptree --export-svg --assets
+```
+
+
 ---
 
 ### Projects that use **typer-helptree**
