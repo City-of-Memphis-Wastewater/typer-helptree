@@ -8,7 +8,7 @@ The format is (read: strives to be) based on [Keep a Changelog](https://keepacha
 
 ## [0.2.6] - 2026-02-17
 ### Added:
-- io.export_help_svg()
+- io.export_help_svg(), with CWD or HOMETYPERHELPTREE pathing.
 - export_svg flag to cli_helptree.py
 
 ---

@@ -63,7 +63,7 @@ def add_typer_helptree(app, console, version: str = "unknown", hidden: bool =Tru
             # Create a dedicated recording console to ensure clean output
             recording_console = Console(record=True, width=120)
             recording_console.print(app_tree)
-            export_help_svg(recording_console, app_name)
+            export_help_svg(recording_console, app_name, version=version)
             
         if not(export_json or export_txt or export_svg):
             # ONLY print if no export flags are set
