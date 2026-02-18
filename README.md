@@ -46,10 +46,10 @@ And then, from the command line:
 yourtyperapp helptree
 ```
 
-To export an SVG to your project ./assets dir:
+To export an SVG and JSON to the ~/.typer_helptree dir:
 
 ```bash
-yourtyperapp helptree --export-svg --assets
+yourtyperapp helptree --export-svg --export-json
 ```
 
 
