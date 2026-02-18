@@ -96,7 +96,7 @@ def export_help_svg(console, app_name: str, version:str, cwd: bool = False) -> P
     else:
         output_path = HELPTREE_HOME / f"{app_name}_v{version}_helptree.svg"
 
-    output_path.mkdir(parents=True, exist_ok=True)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
         
     try:
         # Rich's console must have record=True for this to work
