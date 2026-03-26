@@ -6,9 +6,15 @@ The format is (read: strives to be) based on [Keep a Changelog](https://keepacha
 
 ---
 
+## [0.2.7] - 2026-03-26
+### Fixed:
+- Increase pyhabitat to 1.2.6, which handles on_termux() for Python 3.13 properly.
+
+---
+
 ## [0.2.6] - 2026-02-17
 ### Added:
-- io.export_help_svg(), with CWD or HOMETYPERHELPTREE pathing.
+- io.export_help_svg(), with ./assets/ or typer-helptree hidden home folder pathing.
 - export_svg flag to cli_helptree.py
 
 ---
