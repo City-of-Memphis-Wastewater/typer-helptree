@@ -16,12 +16,16 @@ subprocess.run("typer-helptree", "helptree")
 """
 from __future__ import annotations
 import typer
+from typing import Optional, List
+from pathlib import Path
 from rich.tree import Tree 
 from rich.panel import Panel
 from rich.console import Console
 
 from .helptree import build_help_tree
+from .utils import updating_target_file_references
 
+console_stderr = Console(stderr = True)
 
 def add_typer_helptree(app, console, version: str = "unknown", hidden: bool =True):
     @app.command(name="helptree", hidden = hidden, help="Visualize your entire CLI, beautifully. Export to JSON and TXT.")
@@ -33,9 +37,14 @@ def add_typer_helptree(app, console, version: str = "unknown", hidden: bool =Tru
         export_svg: bool = typer.Option(False, "--export-svg", help="Export to SVG (Vector Image)."),
         use_assets_dir: bool = typer.Option(
             False, 
-            "--assets", 
+            "--assets", "-a",
             help="Export SVG specifically to a local ./assets directory instead of the default typer-helptree home config path."
         ),
+        update_target: Optional[List[str]] = typer.Option(
+            None, 
+            "--path-update", 
+            help="Idenfity file reference to the exported SVG image in the local asset file and bump the version to match the new export. Repeatable."
+        )
     ):
         # Ensure we use ctx.parent.command to get the main app's root command
         root_command = ctx.parent.command 
@@ -72,4 +81,20 @@ def add_typer_helptree(app, console, version: str = "unknown", hidden: bool =Tru
             
         if not(export_json or export_txt or export_svg):
             # ONLY print if no export flags are set
-            console.print(Panel(app_tree, title=f"[bold]{app_name} CLI Help Tree[/bold]", expand=False))
+            console_stderr.print(Panel(app_tree, title=f"[bold]{app_name} CLI Help Tree[/bold]", expand=False))
+
+        if update_target:
+            if use_assets_dir and export_svg:
+                update_target_set = set(update_target)
+                try:
+                    targets_success = updating_target_file_references(
+                        targets=update_target_set, 
+                        app_name=app_name, 
+                        version=version
+                    )
+                    #console_stderr.print(f"Target files updated: {targets_success}")
+                except Exception as e:
+                    console_stderr.print(f"Target file update failed: {e}")
+            else:
+               # Clarify the expectation, though this is a maintenance risk. #maintenancerisk
+               console_stderr.print("No targets updated; the `--asset` flag and the `--export-svg` flag are expected for this.") 
