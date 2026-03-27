@@ -63,7 +63,6 @@ def export_help_json(
         data: Dict[str, Any], 
         app_name: str, 
         version: str, 
-        #use_assets_dir: bool = False,
         output_dir: str | Path | None = None
         ) -> Path:
     """Exports the CLI structure as a machine-readable JSON file."""
@@ -74,7 +73,7 @@ def export_help_json(
         output_dir = Path(output_dir)
         output_path = output_dir / filename_json
     else:
-        output_path = get_dest_dir() / filename_json
+        output_path = get_default_output_dir() / filename_json
 
     try:
         with open(output_path, 'w', encoding='utf-8') as f:
@@ -89,7 +88,6 @@ def export_help_txt(
         text_content: str, 
         app_name: str, 
         version: str, 
-        #use_assets_dir: bool = False,
         output_dir: str | Path | None = None
         ) -> Path:
     """Exports the CLI structure as a plain text file."""
@@ -100,7 +98,7 @@ def export_help_txt(
         output_dir = Path(output_dir)
         output_path = output_dir / filename_txt
     else:
-        output_path = get_dest_dir() / filename_txt
+        output_path = get_default_output_dir() / filename_txt
         
     try:
         output_path.write_text(text_content, encoding='utf-8')
@@ -114,7 +112,6 @@ def export_help_svg(
         console, 
         app_name: str, 
         version:str, 
-        #use_assets_dir: bool = False,
         output_dir: str | Path | None = None
         ) -> Path:
     """Exports the recorded console content as an SVG file."""
@@ -125,7 +122,7 @@ def export_help_svg(
         output_dir = Path(output_dir)
         output_path = output_dir / filename_svg
     else:
-        output_path = get_dest_dir() / filename_svg
+        output_path = get_default_output_dir() / filename_svg
 
     try:
         # Rich's console must have record=True for this to work
@@ -138,16 +135,12 @@ def export_help_svg(
 
 # --- Helpers --- 
 
-def get_dest_dir(use_assets: bool = False) -> Path:
-    """Returns the target directory based on the --assets flag."""
-    if use_assets:
-        dest = Path.cwd() / "assets"
-    else:
-        dest = HELPTREE_HOME
-    
+def get_default_output_dir(use_assets: bool = False) -> Path:
+    """Returns the target directory. Assets pathing not expected here, use output_dir arg."""
+    dest = HELPTREE_HOME
     dest.mkdir(parents=True, exist_ok=True)
     return dest
-    
+
 def get_friendly_path(full_path: Path) -> str:
     """Returns absolute path on Windows or tilde-shortened path on Unix."""
     if pyhabitat.on_windows():
