@@ -90,7 +90,8 @@ def add_typer_helptree(app, console, version: str = "unknown", hidden: bool =Tru
                     targets_success = updating_target_file_references(
                         targets=update_target_set, 
                         app_name=app_name, 
-                        version=version
+                        version=version,
+                        extension = "svg"
                     )
                     #console_stderr.print(f"Target files updated: {targets_success}")
                 except Exception as e:
