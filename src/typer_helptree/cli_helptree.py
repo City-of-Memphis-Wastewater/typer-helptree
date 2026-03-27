@@ -35,11 +35,6 @@ def add_typer_helptree(app, console, version: str = "unknown", hidden: bool =Tru
         export_json: bool = typer.Option(False, "--export-json", help="Export to JSON."),
         export_txt: bool = typer.Option(False, "--export-txt", help="Export to TXT."),
         export_svg: bool = typer.Option(False, "--export-svg", help="Export to SVG (Vector Image)."),
-        #use_assets_dir: bool = typer.Option(
-        #    False, 
-        #    "--assets", "-a",
-        #    help="Export SVG specifically to a local ./assets directory instead of the default typer-helptree home config path."
-        #),
         output_dir: Optional[Path] = typer.Option(
             None, 
             "--output-dir", "-d",
@@ -66,8 +61,7 @@ def add_typer_helptree(app, console, version: str = "unknown", hidden: bool =Tru
             from typer_helptree.helptree import build_help_data
             from typer_helptree.io import export_help_json
             data = build_help_data(root_command, ctx, version=version)
-            #export_help_json(data, app_name, version, use_assets_dir)
-            export_help_json(data, app_name, version, None, output_dir)
+            export_help_json(data, app_name, version, output_dir)
 
         if export_txt:
             from typer_helptree.io import export_help_txt
@@ -75,8 +69,7 @@ def add_typer_helptree(app, console, version: str = "unknown", hidden: bool =Tru
             capture_console = Console(width=200, force_terminal=False, color_system=None)
             with capture_console.capture() as capture:
                 capture_console.print(app_tree)
-            #export_help_txt(capture.get(), app_name, version, use_assets_dir)
-            export_help_txt(capture.get(), app_name, version, None,output_dir)
+            export_help_txt(capture.get(), app_name, version,output_dir)
             
         # Handle SVG Export (Requires a recording console)
         if export_svg:
@@ -84,8 +77,7 @@ def add_typer_helptree(app, console, version: str = "unknown", hidden: bool =Tru
             # Create a dedicated recording console to ensure clean output
             recording_console = Console(record=True, width=120)
             recording_console.print(app_tree)
-            #export_help_svg(recording_console, app_name, version, use_assets_dir)
-            export_help_svg(recording_console, app_name, version, None, output_dir)
+            export_help_svg(recording_console, app_name, version, output_dir)
             
         if not(export_json or export_txt or export_svg):
             # ONLY print if no export flags are set
