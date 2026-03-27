@@ -6,6 +6,13 @@ The format is (read: strives to be) based on [Keep a Changelog](https://keepacha
 
 ---
 
+## [0.2.8] - 2026-03-27
+### Changed:
+- Out with `--assets` flag and use_assets_dir var, in with `--output-dir` flag and output_dir var.
+- Adjust io.py and cli_helptree.py to implemenet this change.
+
+---
+
 ## [0.2.7] - 2026-03-26
 ### Fixed:
 - Increase pyhabitat to 1.2.6, which handles on_termux() for Python 3.13 properly.
