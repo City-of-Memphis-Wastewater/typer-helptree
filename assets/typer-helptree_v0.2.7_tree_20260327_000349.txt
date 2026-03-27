@@ -1,0 +1,10 @@
+typer-helptree (v0.2.7)
+├── Parameters
+│   └── --version: Show the version.
+├── docs - Show the docs for this software.
+│   └── Parameters
+│       ├── --license / -l: Show the LICENSE text.
+│       └── --readme / -r: Show the README.md content.
+└── tools (app) - Additional utility features and maintenance tools.
+    ├── browse-exports - Open the system file explorer at the report output directory.
+    └── nested-tool - Demo

@@ -59,10 +59,22 @@ class UniversalEncoder(json.JSONEncoder):
         
 # --- Export Functionality ---
 
-def export_help_json(data: Dict[str, Any], app_name: str, version: str, use_assets_dir: bool = False) -> Path:
+def export_help_json(
+        data: Dict[str, Any], 
+        app_name: str, 
+        version: str, 
+        use_assets_dir: bool = False,
+        output_dir: str | Path | None = None
+        ) -> Path:
     """Exports the CLI structure as a machine-readable JSON file."""
     timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
-    output_path = get_dest_dir(use_assets_dir) / f"{app_name}_v{version}_tree_{timestamp}.json"
+    filename_json = f"{app_name}_v{version}_tree_{timestamp}.json"
+    
+    if output_dir is not None:
+        output_dir = Path(output_dir)
+        output_path = output_dir / filename_json
+    else:
+        output_path = get_dest_dir(use_assets_dir) / filename_json
 
     try:
         with open(output_path, 'w', encoding='utf-8') as f:
@@ -73,11 +85,23 @@ def export_help_json(data: Dict[str, Any], app_name: str, version: str, use_asse
         error_logger.error(f"JSON export failed: {e}", exc_info=True)
         raise RuntimeError(f"JSON export failed: {e}")
 
-def export_help_txt(text_content: str, app_name: str, version: str, use_assets_dir: bool = False) -> Path:
+def export_help_txt(
+        text_content: str, 
+        app_name: str, 
+        version: str, 
+        use_assets_dir: bool = False,
+        output_dir: str | Path | None = None
+        ) -> Path:
     """Exports the CLI structure as a plain text file."""
     timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
-    output_path = get_dest_dir(use_assets_dir) / f"{app_name}_v{version}_tree_{timestamp}.txt"
-
+    filename_txt = f"{app_name}_v{version}_tree_{timestamp}.txt"
+    
+    if output_dir is not None:
+        output_dir = Path(output_dir)
+        output_path = output_dir / filename_txt
+    else:
+        output_path = get_dest_dir(use_assets_dir) / filename_txt
+        
     try:
         output_path.write_text(text_content, encoding='utf-8')
         print(f"TXT structure exported: {get_friendly_path(output_path)}")
@@ -86,11 +110,22 @@ def export_help_txt(text_content: str, app_name: str, version: str, use_assets_d
         error_logger.error(f"TXT export failed: {e}", exc_info=True)
         raise RuntimeError(f"TXT export failed: {e}")
 
-def export_help_svg(console, app_name: str, version:str, use_assets_dir: bool = False) -> Path:
+def export_help_svg(
+        console, 
+        app_name: str, 
+        version:str, 
+        use_assets_dir: bool = False,
+        output_dir: str | Path | None = None
+        ) -> Path:
     """Exports the recorded console content as an SVG file."""
-    #timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
-    #output_path = HELPTREE_HOME / f"{app_name}_tree_{timestamp}.svg"
-    output_path = get_dest_dir(use_assets_dir) / f"{app_name}_v{version}_helptree.svg"
+
+    filename_svg = f"{app_name}_v{version}_helptree.svg"
+    
+    if output_dir is not None:
+        output_dir = Path(output_dir)
+        output_path = output_dir / filename_svg
+    else:
+        output_path = get_dest_dir(use_assets_dir) / filename_svg
 
     try:
         # Rich's console must have record=True for this to work
@@ -123,7 +158,7 @@ def get_friendly_path(full_path: Path) -> str:
         if full_path.is_relative_to(home):
             return f"~{os.sep}{full_path.relative_to(home)}"
     except Exception:
-        pass
+        export_help_json(data, app_name, version, export_path)
     return str(full_path)
 
 def get_export_path()-> Path:
