@@ -6,6 +6,15 @@ The format is (read: strives to be) based on [Keep a Changelog](https://keepacha
 
 ---
 
+## [0.2.9] – 2026-06-04
+### Changed:
+- CLI flags provided with abbreviations.
+
+### Internal:
+- There should be an enum handling the export filetypes, rather than boolean flags for each.
+
+---
+
 ## [0.2.8] - 2026-03-27
 ### Changed:
 - Out with `--assets` flag and use_assets_dir var, in with `--output-dir` flag and output_dir var.
