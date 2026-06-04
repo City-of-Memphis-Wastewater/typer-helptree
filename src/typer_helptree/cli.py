@@ -62,7 +62,7 @@ app.add_typer(tools_app, name="tools")
 @tools_app.command(name="nested-tool")
 def tools_nested_tool():
     """Demo"""
-    print("This is a demo of a nested command.")
+    print("This is a demo of a nested command.", file=sys.stderr)
 
 @tools_app.command(name="browse-exports")
 def tools_browse_exports():

@@ -5,6 +5,7 @@ from __future__ import annotations
 import json
 import logging
 import os
+import sys
 import datetime
 from pathlib import Path
 from typing import Dict, Any
@@ -78,7 +79,7 @@ def export_help_json(
     try:
         with open(output_path, 'w', encoding='utf-8') as f:
             json.dump(data, f, indent=4, cls=UniversalEncoder)
-        print(f"JSON structure exported: {get_friendly_path(output_path)}")
+        print(f"JSON structure exported: {get_friendly_path(output_path)}", file=sys.stderr)
         return output_path
     except Exception as e:
         error_logger.error(f"JSON export failed: {e}", exc_info=True)
@@ -102,7 +103,7 @@ def export_help_txt(
         
     try:
         output_path.write_text(text_content, encoding='utf-8')
-        print(f"TXT structure exported: {get_friendly_path(output_path)}")
+        print(f"TXT structure exported: {get_friendly_path(output_path)}", file=sys.stderr)
         return output_path
     except Exception as e:
         error_logger.error(f"TXT export failed: {e}", exc_info=True)
@@ -127,7 +128,7 @@ def export_help_svg(
     try:
         # Rich's console must have record=True for this to work
         console.save_svg(str(output_path), title=f"{app_name} CLI Help Tree")
-        print(f"SVG structure exported: {get_friendly_path(output_path)}")
+        print(f"SVG structure exported: {get_friendly_path(output_path)}", file=sys.stderr)
         return output_path
     except Exception as e:
         error_logger.error(f"SVG export failed: {e}", exc_info=True)
