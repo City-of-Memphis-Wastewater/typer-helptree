@@ -35,12 +35,12 @@ def add_typer_helptree(app, console, version: str = "unknown", hidden: bool =Tru
         export_json: bool = typer.Option(False, "--export-json", "-ej",help="Export to JSON."),
         export_txt: bool = typer.Option(False, "--export-txt", "-et", help="Export to TXT."),
         export_svg: bool = typer.Option(False, "--export-svg","-es", help="Export to SVG (Vector Image)."),
-        output_dir: Optional[Path] = typer.Option(
+        output_dir: Optional[Path|str] = typer.Option(
             None, 
             "--output-dir", "-o",
             help="Specify a directory for exports. Defaults to ~/.typer_helptree"
         ),
-        update_target: Optional[List[str]] = typer.Option(
+        update_target: Optional[List[Path|str]] = typer.Option(
             None, 
             "--path-update", "-p",
             help="Idenfity file reference to the exported SVG image in the local asset file and bump the version to match the new export. Repeatable."
