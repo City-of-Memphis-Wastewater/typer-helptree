@@ -106,8 +106,8 @@ def build_help_tree(click_command: click.Command, tree_node: Tree, ctx: click.Co
         group_names = []
 
 
-        local_ctx = click.Context(click_command)
-        local_ctx = make_context(click_command)
+        #local_ctx = click.Context(click_command)
+        local_ctx = make_context(click_command,ctx)
         
         logger.debug(
             "helptree: %s commands=%s",
@@ -160,8 +160,8 @@ def build_help_tree(click_command: click.Command, tree_node: Tree, ctx: click.Co
             sub_node = tree_node.add(
                 f"[bold white]{cmd_name}[/bold white] - [dim]{full_description}[/dim]"
             )
-            cmd_ctx = click.Context(cmd)
-            cmd_ctx = make_context(cmd)
+            #md_ctx = click.Context(cmd)
+            cmd_ctx = make_context(cmd, local_ctx)
     
             build_help_tree(cmd, sub_node, cmd_ctx)
 
@@ -174,8 +174,8 @@ def build_help_tree(click_command: click.Command, tree_node: Tree, ctx: click.Co
             sub_node = tree_node.add(
                 f"[bold cyan]{cmd_name}[/bold cyan] [dim](app)[/dim] - [dim]{full_description}[/dim]"
             )
-            cmd_ctx = click.Context(cmd)
-            cmd_ctx = make_context(cmd)
+            #cmd_ctx = click.Context(cmd)
+            cmd_ctx = make_context(cmd, local_ctx)
 
             build_help_tree(cmd, sub_node, cmd_ctx)
 
@@ -192,7 +192,7 @@ def build_help_tree(click_command: click.Command, tree_node: Tree, ctx: click.Co
 def build_help_data(click_command: click.Command, ctx: click.Context, version: str = None) -> Dict[str, Any]:
     """Recursively builds a dictionary for JSON export, utilizing _get_param_data."""
 
-    is_group = is_group(click_command)
+    is_group_cmd = is_group(click_command)
 
     node_data = {
         "name": click_command.name or "app",
@@ -201,8 +201,8 @@ def build_help_data(click_command: click.Command, ctx: click.Context, version: s
             or click_command.get_short_help_str()
             or ""
         ),
-        "kind": "app" if is_group else "command",
-        "is_group": is_group,          # kept for compatibility
+        "kind": "app" if is_group_cmd else "command",
+        "is_group": is_group_cmd,          # kept for compatibility
         "parameters": [],
         "subcommands": [],
     }
@@ -221,7 +221,7 @@ def build_help_data(click_command: click.Command, ctx: click.Context, version: s
             # Logic restored: uses the helper function
             node_data["parameters"].append(_get_param_data(param))
 
-    if is_group(): 
+    if is_group(click_command):
         command_names: list[str] = []
         group_names: list[str] = []
 
@@ -279,9 +279,9 @@ def build_help_data(click_command: click.Command, ctx: click.Context, version: s
 
     return node_data
 
-def is_group(cmd):
+def is_group(cmd)->bool:
     return callable(getattr(cmd, "list_commands", None))
 
-def make_context(cmd):
-    return type(cmd).context_class(cmd)
+def make_context(cmd,parent=None):
+    return type(cmd).context_class(cmd, parent=parent)
 
