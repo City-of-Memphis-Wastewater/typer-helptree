@@ -165,11 +165,11 @@ def build_help_tree(click_command: click.Command, tree_node: Tree, ctx: click.Co
             )
             build_help_tree(cmd, sub_node, click.Context(cmd))
 
-    logger.debug(
-        "Contexts: parent_ctx=%s local_ctx=%s",
-        hex(id(ctx)),
-        hex(id(local_ctx)),
-    )
+        logger.debug(
+            "Contexts: parent_ctx=%s local_ctx=%s",
+            hex(id(ctx)),
+            hex(id(local_ctx)),
+        )
     logger.debug(
         "EXIT build_help_tree: command=%s",
         click_command.name,
