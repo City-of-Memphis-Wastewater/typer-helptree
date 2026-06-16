@@ -101,7 +101,10 @@ def build_help_tree(click_command: click.Command, tree_node: Tree, ctx: click.Co
         type(click_command).__mro__,
     )
 
-    if isinstance(click_command, click.Group):
+    is_group = callable(getattr(click_command, "list_commands", None))
+
+    if is_group:
+    #if isinstance(click_command, click.Group):
         command_names = []
         group_names = []
 
