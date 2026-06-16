@@ -95,16 +95,13 @@ def build_help_tree(click_command: click.Command, tree_node: Tree, ctx: click.Co
     )
 
     logger.debug(
-        "class=%r isinstance(click.Group)=%s mro=%s",
+        "class=%r is_group()=%s mro=%s",
         type(click_command),
-        isinstance(click_command, click.Group),
+        is_group(click_command),
         type(click_command).__mro__,
     )
 
-    is_group = callable(getattr(click_command, "list_commands", None))
-
-    if is_group:
-    #if isinstance(click_command, click.Group):
+    if is_group(click_command):
         command_names = []
         group_names = []
 
@@ -144,7 +141,7 @@ def build_help_tree(click_command: click.Command, tree_node: Tree, ctx: click.Co
                 )
                 continue
             # ---
-            if isinstance(cmd, click.Group):
+            if is_group(cmd):
                 group_names.append(cmd_name)
             else:
                 command_names.append(cmd_name)
@@ -188,7 +185,7 @@ def build_help_tree(click_command: click.Command, tree_node: Tree, ctx: click.Co
 def build_help_data(click_command: click.Command, ctx: click.Context, version: str = None) -> Dict[str, Any]:
     """Recursively builds a dictionary for JSON export, utilizing _get_param_data."""
 
-    is_group = isinstance(click_command, click.Group)
+    is_group = is_group(click_command)
 
     node_data = {
         "name": click_command.name or "app",
@@ -217,7 +214,7 @@ def build_help_data(click_command: click.Command, ctx: click.Context, version: s
             # Logic restored: uses the helper function
             node_data["parameters"].append(_get_param_data(param))
 
-    if isinstance(click_command, click.Group):
+    if is_group(): 
         command_names: list[str] = []
         group_names: list[str] = []
 
@@ -250,7 +247,7 @@ def build_help_data(click_command: click.Command, ctx: click.Context, version: s
                 )
                 continue
             # ---
-            if isinstance(cmd, click.Group):
+            if is_group(cmd):
                 group_names.append(cmd_name)
             else:
                 command_names.append(cmd_name)
@@ -274,3 +271,10 @@ def build_help_data(click_command: click.Command, ctx: click.Context, version: s
             )
 
     return node_data
+
+def is_group(cmd):
+    return callable(getattr(cmd, "list_commands", None))
+
+def make_context(cmd):
+    return type(cmd).context_class(cmd)
+
