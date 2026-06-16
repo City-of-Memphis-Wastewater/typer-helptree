@@ -6,6 +6,11 @@ import click
 from rich.tree import Tree
 from typing import Dict, Any, List
 from enum import Enum
+import logging
+if not logging.getLogger().handlers:
+    logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
 
 def _get_param_data_(param: click.Parameter) -> Dict[str, Any]:
     """
@@ -86,10 +91,36 @@ def build_help_tree(click_command: click.Command, tree_node: Tree, ctx: click.Co
         command_names = []
         group_names = []
 
-        for cmd_name in click_command.list_commands(ctx):
-            cmd = click_command.get_command(ctx, cmd_name)
-            if not cmd or cmd.name == "helptree":
+
+        local_ctx = click.Context(click_command)
+
+        logger.debug(
+            "helptree: %s commands=%s",
+            click_command.name,
+            click_command.list_commands(local_ctx),
+        )
+
+        for cmd_name in click_command.list_commands(local_ctx):
+            cmd = click_command.get_command(local_ctx, cmd_name)
+     
+            # ---
+            #if not cmd or cmd.name == "helptree":
+            #    continue
+            
+            if cmd is None:
+                logger.warning(
+                    "helptree: get_command(%s) returned None under %s",
+                    cmd_name,
+                    click_command.name,
+                )
                 continue
+
+            if cmd.name == "helptree":
+                logger.debug(
+                    "helptree: skipping internal helptree command"
+                )
+                continue
+            # ---
             if isinstance(cmd, click.Group):
                 group_names.append(cmd_name)
             else:
@@ -101,7 +132,7 @@ def build_help_tree(click_command: click.Command, tree_node: Tree, ctx: click.Co
 
         # Render commands first
         for cmd_name in command_names:
-            cmd = click_command.get_command(ctx, cmd_name)
+            cmd = click_command.get_command(local_ctx, cmd_name)
             raw_help = cmd.help or ""
             full_description = raw_help.splitlines()[0].strip() if raw_help else "No description available."
 
@@ -112,14 +143,14 @@ def build_help_tree(click_command: click.Command, tree_node: Tree, ctx: click.Co
 
         # Render sub-apps second
         for cmd_name in group_names:
-            cmd = click_command.get_command(ctx, cmd_name)
+            cmd = click_command.get_command(local_ctx, cmd_name)
             raw_help = cmd.help or ""
             full_description = raw_help.splitlines()[0].strip() if raw_help else "No description available."
 
             sub_node = tree_node.add(
                 f"[bold cyan]{cmd_name}[/bold cyan] [dim](app)[/dim] - [dim]{full_description}[/dim]"
             )
-            build_help_tree(cmd, sub_node, ctx)
+            build_help_tree(cmd, sub_node, click.Context(cmd))
 
 def build_help_data(click_command: click.Command, ctx: click.Context, version: str = None) -> Dict[str, Any]:
     """Recursively builds a dictionary for JSON export, utilizing _get_param_data."""
@@ -158,10 +189,31 @@ def build_help_data(click_command: click.Command, ctx: click.Context, version: s
         group_names: list[str] = []
 
         for cmd_name in click_command.list_commands(ctx):
+            logger.debug(
+                "helptree: command=%s list_commands=%s",
+                click_command.name,
+                command_names_raw,
+            )
+
             cmd = click_command.get_command(ctx, cmd_name)
-            if not cmd or cmd.name == "helptree":
+            # ---
+            #if not cmd or cmd.name == "helptree":
+            #    continue
+            
+            if cmd is None:
+                logger.warning(
+                    "helptree: get_command(%s) returned None under %s",
+                    cmd_name,
+                    click_command.name,
+                )
                 continue
 
+            if cmd.name == "helptree":
+                logger.debug(
+                    "helptree: skipping internal helptree command"
+                )
+                continue
+            # ---
             if isinstance(cmd, click.Group):
                 group_names.append(cmd_name)
             else:
