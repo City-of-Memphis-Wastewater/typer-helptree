@@ -6,6 +6,12 @@ The format is (read: strives to be) based on [Keep a Changelog](https://keepacha
 
 ---
 
+## [0.2.10.5] – 2026-06-16
+### Changed:
+- Add click>=8.1.8 explicity.
+
+---
+
 ## [0.2.10.4] – 2026-06-16
 ### Changed:
 - Handle both click.Context and the vendored typer._click.Context using make_context() and is_group().
