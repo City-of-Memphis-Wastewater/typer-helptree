@@ -211,12 +211,15 @@ def build_help_data(click_command: click.Command, ctx: click.Context, version: s
         command_names: list[str] = []
         group_names: list[str] = []
 
-        for cmd_name in click_command.list_commands(ctx):
-            logger.debug(
-                "helptree: command=%s list_commands=%s",
-                click_command.name,
-                command_names_raw,
-            )
+        command_names_raw = click_command.list_commands(ctx)
+
+        logger.debug(
+            "helptree: command=%s list_commands=%s",
+            click_command.name,
+            command_names_raw,
+        )
+        for cmd_name in command_names_raw:
+            
 
             cmd = click_command.get_command(ctx, cmd_name)
             # ---
