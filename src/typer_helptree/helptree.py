@@ -7,10 +7,10 @@ from rich.tree import Tree
 from typing import Dict, Any, List
 from enum import Enum
 import logging
-if not logging.getLogger().handlers:
-    logging.basicConfig(level=logging.DEBUG)
+#if not logging.getLogger().handlers:
+#    logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
+#logger.setLevel(logging.DEBUG)
 
 def _get_param_data_(param: click.Parameter) -> Dict[str, Any]:
     """
