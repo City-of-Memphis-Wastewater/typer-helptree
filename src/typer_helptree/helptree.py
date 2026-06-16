@@ -94,6 +94,13 @@ def build_help_tree(click_command: click.Command, tree_node: Tree, ctx: click.Co
         hex(id(ctx)),
     )
 
+    logger.debug(
+        "class=%r isinstance(click.Group)=%s mro=%s",
+        type(click_command),
+        isinstance(click_command, click.Group),
+        type(click_command).__mro__,
+    )
+
     if isinstance(click_command, click.Group):
         command_names = []
         group_names = []
