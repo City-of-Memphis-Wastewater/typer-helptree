@@ -107,7 +107,8 @@ def build_help_tree(click_command: click.Command, tree_node: Tree, ctx: click.Co
 
 
         local_ctx = click.Context(click_command)
-
+        local_ctx = make_context(click_command)
+        
         logger.debug(
             "helptree: %s commands=%s",
             click_command.name,
@@ -159,7 +160,10 @@ def build_help_tree(click_command: click.Command, tree_node: Tree, ctx: click.Co
             sub_node = tree_node.add(
                 f"[bold white]{cmd_name}[/bold white] - [dim]{full_description}[/dim]"
             )
-            build_help_tree(cmd, sub_node, click.Context(cmd))
+            cmd_ctx = click.Context(cmd)
+            cmd_ctx = make_context(cmd)
+    
+            build_help_tree(cmd, sub_node, cmd_ctx)
 
         # Render sub-apps second
         for cmd_name in group_names:
@@ -170,7 +174,10 @@ def build_help_tree(click_command: click.Command, tree_node: Tree, ctx: click.Co
             sub_node = tree_node.add(
                 f"[bold cyan]{cmd_name}[/bold cyan] [dim](app)[/dim] - [dim]{full_description}[/dim]"
             )
-            build_help_tree(cmd, sub_node, click.Context(cmd))
+            cmd_ctx = click.Context(cmd)
+            cmd_ctx = make_context(cmd)
+
+            build_help_tree(cmd, sub_node, cmd_ctx)
 
         logger.debug(
             "Contexts: parent_ctx=%s local_ctx=%s",
