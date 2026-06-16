@@ -6,6 +6,13 @@ The format is (read: strives to be) based on [Keep a Changelog](https://keepacha
 
 ---
 
+## [0.2.10.4] – 2026-06-16
+### Changed:
+- Handle both click.Context and the vendored typer._click.Context using make_context() and is_group().
+- Type hinting is now imperfect.
+
+---
+
 ## [0.2.9] – 2026-06-04
 ### Changed:
 - CLI flags provided with abbreviations.
