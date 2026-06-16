@@ -87,6 +87,13 @@ def build_help_tree(click_command: click.Command, tree_node: Tree, ctx: click.Co
     """Builds the Rich Tree structure recursively."""
     _add_parameters_to_node(click_command, tree_node)
 
+    logger.debug(
+        "ENTER build_help_tree: command=%s type=%s ctx=%s",
+        click_command.name,
+        type(click_command).__name__,
+        hex(id(ctx)),
+    )
+
     if isinstance(click_command, click.Group):
         command_names = []
         group_names = []
@@ -101,6 +108,12 @@ def build_help_tree(click_command: click.Command, tree_node: Tree, ctx: click.Co
         )
 
         for cmd_name in click_command.list_commands(local_ctx):
+            logger.debug(
+                "Resolving child: parent=%s child=%s",
+                click_command.name,
+                cmd_name,
+            )
+
             cmd = click_command.get_command(local_ctx, cmd_name)
      
             # ---
@@ -139,7 +152,7 @@ def build_help_tree(click_command: click.Command, tree_node: Tree, ctx: click.Co
             sub_node = tree_node.add(
                 f"[bold white]{cmd_name}[/bold white] - [dim]{full_description}[/dim]"
             )
-            build_help_tree(cmd, sub_node, ctx)
+            build_help_tree(cmd, sub_node, click.Context(cmd))
 
         # Render sub-apps second
         for cmd_name in group_names:
@@ -151,6 +164,16 @@ def build_help_tree(click_command: click.Command, tree_node: Tree, ctx: click.Co
                 f"[bold cyan]{cmd_name}[/bold cyan] [dim](app)[/dim] - [dim]{full_description}[/dim]"
             )
             build_help_tree(cmd, sub_node, click.Context(cmd))
+
+    logger.debug(
+        "Contexts: parent_ctx=%s local_ctx=%s",
+        hex(id(ctx)),
+        hex(id(local_ctx)),
+    )
+    logger.debug(
+        "EXIT build_help_tree: command=%s",
+        click_command.name,
+    )
 
 def build_help_data(click_command: click.Command, ctx: click.Context, version: str = None) -> Dict[str, Any]:
     """Recursively builds a dictionary for JSON export, utilizing _get_param_data."""
