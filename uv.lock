@@ -95,11 +95,11 @@ wheels = [
 
 [[package]]
 name = "pyhabitat"
-version = "1.1.38"
+version = "1.2.8.1"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/c5/4c/6aba6c4ee0b93218df08199c045cef6f0e2d9859efadb2b0cbafe6a72490/pyhabitat-1.1.38.tar.gz", hash = "sha256:9fb2fe7a214e6fe0d1c7584fd6faa150f280316c362ae758cae4ad9951a17ee1", size = 27881, upload-time = "2026-02-11T18:37:01.038Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/58/c8/d4d5fee4b7f7927f4e8e2ac7ee05c6cfdb0ee92f5b5dec81e1d1da6af4fb/pyhabitat-1.2.8.1.tar.gz", hash = "sha256:448770425f44737dcbfff854c5a58bad438bfe759ebdcc7adcb57f349fc03a18", size = 30330, upload-time = "2026-06-15T14:22:20.019Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/e8/c6/03e947024bc804a8792671527da4803c45d11e89eb40d6e8ff398bfa65e1/pyhabitat-1.1.38-py3-none-any.whl", hash = "sha256:a6a4ea26477047d9f173714ee12aad0c1c94b3fb5dc336eed827635e3d6cd66c", size = 26081, upload-time = "2026-02-11T18:36:59.778Z" },
+    { url = "https://files.pythonhosted.org/packages/aa/1a/1476a0bdb6021ecdac776f91d82acbbc12cbfdb13d2711ca382f55245e91/pyhabitat-1.2.8.1-py3-none-any.whl", hash = "sha256:20f965103d27553b5b3a927bd73a4c2d8cdf8b7eb7442b4ac5f05138357049c3", size = 31117, upload-time = "2026-06-15T14:22:18.764Z" },
 ]
 
 [[package]]
@@ -145,6 +145,8 @@ wheels = [
 name = "typer-helptree"
 source = { editable = "." }
 dependencies = [
+    { name = "click", version = "8.1.8", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
+    { name = "click", version = "8.3.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
     { name = "pyhabitat" },
     { name = "rich" },
     { name = "typer" },
@@ -152,7 +154,8 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
-    { name = "pyhabitat", specifier = ">=1.1.38" },
+    { name = "click", specifier = ">=8.1.8" },
+    { name = "pyhabitat", specifier = ">=1.2.6" },
     { name = "rich", specifier = ">=14.2.0" },
     { name = "typer", specifier = ">=0.20.0" },
 ]
