@@ -6,6 +6,13 @@ The format is (read: strives to be) based on [Keep a Changelog](https://keepacha
 
 ---
 
+## [0.2.11] – 2026-07-07
+### Changed:
+- Increase pyhabitat to 1.3.4
+- Use semvar
+
+---
+
 ## [0.2.10.5] – 2026-06-16
 ### Changed:
 - Add click>=8.1.8 explicity.
