@@ -28,7 +28,7 @@ from .utils import updating_target_file_references
 console_stderr = Console(stderr = True)
 
 def add_typer_helptree(app, console, version: str = "unknown", hidden: bool =True):
-    @app.command(name="helptree", hidden = hidden, help="Visualize your entire CLI, beautifully. Export to JSON and TXT.")
+    @app.command(name="helptree", hidden = hidden, help="Visualize your entire CLI, beautifully.")
     def help_tree_command(
         ctx: typer.Context,
         version: str = version,
