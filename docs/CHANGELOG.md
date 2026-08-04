@@ -6,6 +6,12 @@ The format is (read: strives to be) based on [Keep a Changelog](https://keepacha
 
 ---
 
+## [0.2.12] – 2026-08-04
+### Changed:
+- Alter CLI help description to be less specific for export filetypes.
+
+---
+
 ## [0.2.11] – 2026-07-07
 ### Changed:
 - Increase pyhabitat to 1.3.4

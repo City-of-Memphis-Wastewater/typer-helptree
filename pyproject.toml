@@ -1,7 +1,7 @@
 [project]
 name = "typer-helptree"
 dynamic = ["version"]
-description = "Display your entire CLI structure, beautifully. Screenshot ready."
+description = "Display your entire CLI structure, beautifully. SVG export."
 readme = "README.md"
 
 requires-python = ">=3.9"
